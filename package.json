@@ -1,0 +1,40 @@
+{
+  "name": "seproject",
+  "version": "1.0.0",
+  "description": "seproject webpack part",
+  "main": "index.jsx",
+  "scripts": {
+    "start": "webpack-dev-server --progress --profile --colors --hot --content-base build/",
+    "build": "webpack --progress --profile --colors --config webpack.config.production.js",
+    "server": "node server.js"
+  },
+  "keywords": [
+    "software engineering",
+    "seproject"
+  ],
+  "author": "SE2016GroupSha",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "body-parser": "^1.15.2",
+    "css-loader": "^0.25.0",
+    "expose-loader": "^0.7.1",
+    "express": "^4.14.0",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "bootstrapValidator": "^0.5.3",
+    "jquery": "^3.1.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2"
+  }
+}
