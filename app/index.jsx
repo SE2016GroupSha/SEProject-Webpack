@@ -1,4 +1,5 @@
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+require('../node_modules/bootstrap/buttons.css');
 require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 require('../node_modules/bootstrapValidator/dist/css/bootstrapValidator.css');
 require('../node_modules/bootstrapValidator/dist/js/bootstrapValidator.js');
