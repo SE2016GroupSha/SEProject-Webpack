@@ -83,7 +83,8 @@ var PDO = React.createClass( {
 
 
     render: function() {
-
+        var str = 'rgb(255, 140, 60)'
+    
 
 
         return (
@@ -123,7 +124,7 @@ var PDO = React.createClass( {
                     </div>
                     <div id="collapseThree2" className="panel-collapse collapse">
                         <div className="list-group">
-                        <button className="button button-raised button-action button-circle button-jumbo"><i className="fa fa-thumbs-up"></i></button>
+                        <span className="glyphicon glyphicon-euro" style={{color:str}}> Euro</span>
                             <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
                             <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
                             <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
