@@ -56,6 +56,15 @@ app.get('/api/hello', function (req, res) {
 	res.end(data);
 })
 
+app.post('/api/pdos', urlencodedParser, function (req, res) {
+
+	var fs = require('fs');
+	var data = fs.readFileSync('apiTest/new/pdos.json','utf-8');
+
+	console.log(req.body);
+	res.end(data);
+})
+
 
 var server = app.listen(8081, function () {
 
