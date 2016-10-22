@@ -46,6 +46,7 @@ var AddPDO = React.createClass( {
             temp += ',' + fileds[i];
         }
         result['pdo.string'] = temp;
+        result['pdo.createdate'] = new Date();
         return result;
     },
     resetForm: function() {
