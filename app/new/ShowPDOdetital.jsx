@@ -8,7 +8,7 @@ var ShowPDOdetital = React.createClass( {
 
 
         return (
-            <div className="modal fade" id={"modal-"+this.props.modalType+"-"+this.props.id} role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div className="modal fade" id={"modal-" + this.props.modalType + "-" + this.props.id} role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

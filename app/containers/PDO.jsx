@@ -1,4 +1,7 @@
 ﻿var PDOcom = require( '../new/PDOcom' );
+var AddPDO = require( '../new/AddPDO' );
+
+
 var PDO = React.createClass( {
     getInitialState: function() {
         return {
@@ -7,8 +10,16 @@ var PDO = React.createClass( {
             searchKey: "",
             timestamp: 0,
             timer: null,
-            pdos: []
+            pdos: [],
+            clickNum:1
         };
+    },
+    clickMe: function() {
+        var temp = this.state.clickNum+1;
+        this.setState( {
+            clickNum: temp
+        });
+        
     },
     componentDidMount: function() {
         //初始状态是loading，在这里做第一次加载
@@ -84,7 +95,7 @@ var PDO = React.createClass( {
 
     render: function() {
         var str = 'rgb(255, 140, 60)'
-    
+
 
 
         return (
@@ -100,7 +111,7 @@ var PDO = React.createClass( {
                     </div>
 
                     <div id="collapseThree1" className="panel-collapse collapse">
-                                     
+
                         <div className="panel-body">
 
                             <PDOcom  loading={this.state.loading}
@@ -123,13 +134,10 @@ var PDO = React.createClass( {
                         </h4>
                     </div>
                     <div id="collapseThree2" className="panel-collapse collapse">
-                        <div className="list-group">
-                        <span className="glyphicon glyphicon-euro" style={{color:str}}> Euro</span>
-                            <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
-                            <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
-                            <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
-                            <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
-                            <a href="http://localhost:8080/" className="list-group-item">PDO就在这里展示</a>
+                        <div className="panel-body">
+                            <AddPDO freshViewHandle = {this.freshViewHandle}
+                            clickNum = {this.state.clickNum}
+                            clickMe = {this.clickMe}></AddPDO>
                         </div>
                     </div>
                 </div>

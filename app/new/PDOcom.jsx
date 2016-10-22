@@ -32,8 +32,11 @@ var PDOcom = React.createClass( {
                         <th id="table-header-author" width="25%" style={{ textAlign: 'center' }}>
                             PDO-name
                         </th>
-                        <th id="table-header-author" width="75%" style={{ textAlign: 'center' }}>
+                        <th id="table-header-author" width="55%" style={{ textAlign: 'center' }}>
                             something
+                        </th>
+                        <th id="table-header-author" width="20%" style={{ textAlign: 'center' }}>
+                            see_detail
                         </th>
                     </tr>
                 </thead>
