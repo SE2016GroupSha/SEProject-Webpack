@@ -3,7 +3,12 @@ var app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
+app.post('/api/add', urlencodedParser, function (req, res) {
 
+	console.log(req.body);
+
+	res.end('');
+})
 app.post('/api/hello', urlencodedParser, function (req, res) {
 
 	var data;
