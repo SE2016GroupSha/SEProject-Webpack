@@ -14,7 +14,6 @@ var AddPDOitems = React.createClass( {
             <div className="form-group">
                 <label  >Field  {this.props.id}</label>
                 <input type="text"  className="form-control" onChange={this.props.StringChangeHandle.bind( null, this.props.id ) } />
-
             </div>
 
 

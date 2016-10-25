@@ -27,8 +27,9 @@ var PDOcom = React.createClass( {
         }
         return (
             <table className="table table-bordered table-hover">
-                <thead>
+                <thead >
                     <tr>
+                    
                         <th id="table-header-author" width="25%" style={{ textAlign: 'center' }}>
                             PDO-name
                         </th>

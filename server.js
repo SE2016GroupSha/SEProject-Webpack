@@ -69,7 +69,18 @@ app.post('/api/pdos', urlencodedParser, function (req, res) {
 	console.log(req.body);
 	res.end(data);
 })
+app.post('/api/pdonamecheck', urlencodedParser, function (req, res) {
+	
+	var data = {"valid": true};
+	//-------------------------------
+	if (req.body.pdoname=='000-0-000-00000-0' || req.body.pdoname=='000-0-000-00000-1' || req.body.pdoname=='000-0-000-00000-2') {
+		data = {"valid": false};
+	}
 
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
 
 var server = app.listen(8081, function () {
 

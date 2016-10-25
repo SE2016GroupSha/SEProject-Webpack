@@ -4,7 +4,7 @@ var AddPDO = React.createClass( {
         freshViewHandle: React.PropTypes.func.isRequired,
         clickNum: React.PropTypes.number.isRequired,
         clickMe: React.PropTypes.func.isRequired,
-
+        loadFormValidator:React.PropTypes.func.isRequired,
     },
     getInitialState: function() {
         return {
@@ -12,6 +12,7 @@ var AddPDO = React.createClass( {
             name: ''
         };
     },
+    
     NameChangeHandle: function( event ) {
         //alert(changeType+", "+event.target.value);
 
@@ -46,24 +47,21 @@ var AddPDO = React.createClass( {
             temp += ',' + fileds[i];
         }
         result['pdo.string'] = temp;
-        result['pdo.createdate'] = new Date();
+
+        var q = new Date();
+        result['pdo.createdate'] = q.getTime();
         return result;
     },
     resetForm: function() {
         //仅为add设计，在freshViewHandle后edit会被销毁，即无需考虑
+        var Form = this.refs.refCopy;
+        var check1 = $( Form ).data( 'bootstrapValidator' );
 
-        var check1 = $( this.state.normalDOM ).data( 'bootstrapValidator' );
-        var check2 = $( this.state.extendDOM ).data( 'bootstrapValidator' );
 
         if ( typeof ( check1 ) != "undefined" ) {
-            $( this.state.normalDOM ).data( 'bootstrapValidator' ).destroy();
-            $( this.state.normalDOM ).data( 'bootstrapValidator', null );
-            this.loadNormalFormValidator( this.state.normalDOM );
-        }
-        if ( typeof ( check2 ) != "undefined" ) {
-            $( this.state.extendDOM ).data( 'bootstrapValidator' ).destroy();
-            $( this.state.extendDOM ).data( 'bootstrapValidator', null );
-            this.loadExtendFormValidator( this.state.extendDOM );
+            $( Form ).data( 'bootstrapValidator' ).destroy();
+            $( Form ).data( 'bootstrapValidator', null );
+            this.loadFormValidator( Form );
         }
 
         this.setState( {
@@ -71,11 +69,27 @@ var AddPDO = React.createClass( {
             fileds: []
         });
     },
+    
+    checkInput: function( name, fileds ) {
+        var Form = this.refs.refCopy;
+        this.props.loadFormValidator( Form );
+
+        var check1 = $( Form ).data( 'bootstrapValidator' );
+        check1.validate();
+        if ( !check1.isValid() ) {
+            return false;
+        }
+
+        return true;
+
+    },
+
     subHandle: function( event ) {
 
-        //        if ( !this.checkInput() ) { 暂不检查
-        //            return;
-        //        }
+        if ( !this.checkInput( this.state.name, this.state.fileds ) ) {
+
+            return;
+        }
 
         $.ajax( {
             async: false,//阻塞的，保证刷新得到的视图是新的
@@ -88,7 +102,6 @@ var AddPDO = React.createClass( {
         this.props.freshViewHandle();
 
         //$( "#modal-" + this.props.modalType + "-" + this.props.id ).modal( 'hide' );
-
         //edit会销毁，add不会，故要恢复纯净状态
         this.resetForm();
     },
@@ -106,19 +119,24 @@ var AddPDO = React.createClass( {
         return (
 
             <div className="col-md-12 column">
-                <form role="form"  name="myForm">
+                <form role="form"   ref="refCopy">
                     <div className="form-group">
                         <label>PDO name</label>
-                        <input type="text" className="form-control" onChange={this.NameChangeHandle} />
+                        <input type="text" className="form-control" onChange={this.NameChangeHandle} name = "pdoname" />
                     </div>
 
                     {items}
                     <p></p>
-                    <span onClick={this.props.clickMe} className="glyphicon glyphicon-plus" style={{ color: cha }}>
-                        Add a new field
-                    </span>
+                    <a href="javascript:void(0)">
+                        <span onClick={this.props.clickMe} className="glyphicon glyphicon-plus" style={{ color: cha }}>
+                            Add a new field
+                        </span>
+                    </a>
 
-                    <button type="submit" className="btn btn-default" onClick={this.subHandle}>Submit</button>
+                    <div className="pull-right">
+                        <button type="submit" className="btn btn-default" onClick={this.subHandle} >Submit</button>
+                        {/*button 按钮点击第一次 校验 还需点击第二次 尚未解决*/}
+                    </div>
                 </form>
             </div>
         );
