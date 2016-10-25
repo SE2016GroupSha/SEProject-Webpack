@@ -1,18 +1,19 @@
-﻿var View = React.createClass({
-	render: function () {
+﻿var DisplayData = require('./DisplayData');
+var SearchBar = require('./SearchBar');
+
+var View = React.createClass({
+	getInitialState: function () {
+		return {
+			
+		}
+	},
+	
+	render: function () {	
 		return (
-				<div className="row clearfix">
-					<div className="col-xs-12 column">
-						<div className="jumbotron">
-							<h1>
-								查看数据
-							</h1>
-							<p>
-								查看数据就在这里实现
-							</p>
-						</div>
-					</div>
-				</div>
+			<div className = 'container-fluid'>
+				<SearchBar />
+				<DisplayData />
+			</div>
 		);
 	}
 });
