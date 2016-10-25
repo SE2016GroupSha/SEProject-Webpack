@@ -11,44 +11,11 @@ var PDO = React.createClass( {
             timestamp: 0,
             timer: null,
             pdos: [],
-            clickNum: 1
         };
     },
-    clickMe: function() {
-        var temp = this.state.clickNum + 1;
-        this.setState( {
-            clickNum: temp
-        });
-
-    },
-    loadFormValidator: function( Form ) {
-        $( Form ).bootstrapValidator( {
-            message: '格式不正确',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                pdoname: {
-                    validators: {
-                        notEmpty: {
-                            message: 'pdoname不能为空'
-                        },
-                        remote: {
-                            type: 'POST',
-                            url: 'api/pdonamecheck',
-                            message: 'ISBN已存在',
-                            delay: 500
-                        }
-                    }
-                }
-            }
-        })
-            .on( 'success.form.bv', function( e ) {
-                e.preventDefault();
-            });
-    },
+ 
+    
+    
     componentDidMount: function() {
         //初始状态是loading，在这里做第一次加载
         this.freshViewHandle();
@@ -161,9 +128,7 @@ var PDO = React.createClass( {
                             <div id="collapseThree2" className="panel-collapse collapse">
                                 <div className="panel-body">
                                     <AddPDO freshViewHandle = {this.freshViewHandle}
-                                        clickNum = {this.state.clickNum}
-                                        clickMe = {this.clickMe}
-                                    loadFormValidator = {this.loadFormValidator}></AddPDO>
+                                        />
                                 </div>
                             </div>
                         </div>

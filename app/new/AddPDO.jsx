@@ -1,18 +1,68 @@
-var AddPDOitems = require( '../new/AddPDOitems' );
+var AddPDOdom = require( '../new/AddPDOdom' );
 var AddPDO = React.createClass( {
     propTypes: {
         freshViewHandle: React.PropTypes.func.isRequired,
-        clickNum: React.PropTypes.number.isRequired,
-        clickMe: React.PropTypes.func.isRequired,
-        loadFormValidator:React.PropTypes.func.isRequired,
     },
     getInitialState: function() {
         return {
             fileds: [],
-            name: ''
+            name: '',
+            clickNum: 1,
+            pdoaddDOM: null
         };
     },
-    
+    clickMe: function() {
+        var temp = this.state.clickNum + 1;
+        var a = ( temp - 1 ).toString;
+
+        this.setState( {
+            clickNum: temp
+        });
+
+    },
+    loadFormValidator: function( Form ) {
+        $( Form ).bootstrapValidator( {
+            message: '格式不正确',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                pdoname: {
+                    validators: {
+                        notEmpty: {
+                            message: 'pdoname不能为空'
+                        },
+                        remote: {
+                            type: 'POST',
+                            url: 'api/pdonamecheck',
+                            message: 'pdoname已存在',
+                            delay: 500
+                        }
+                    }
+                },
+                0: {
+                    validators: {
+                        notEmpty: {
+                            message: '首字段不能为空'
+                        }
+                    }
+                }
+
+
+            }
+        })
+            .on( 'success.form.bv', function( e ) {
+                e.preventDefault();
+            });
+    },
+    pdoaddDOMHandle: function( dom ) {
+        //alert("dom extend");
+        this.setState( {
+            pdoaddDOM: dom
+        });
+    },
     NameChangeHandle: function( event ) {
         //alert(changeType+", "+event.target.value);
 
@@ -54,14 +104,14 @@ var AddPDO = React.createClass( {
     },
     resetForm: function() {
         //仅为add设计，在freshViewHandle后edit会被销毁，即无需考虑
-        var Form = this.refs.refCopy;
-        var check1 = $( Form ).data( 'bootstrapValidator' );
+
+        var check1 = $( this.state.pdoaddDOM ).data( 'bootstrapValidator' );
 
 
         if ( typeof ( check1 ) != "undefined" ) {
-            $( Form ).data( 'bootstrapValidator' ).destroy();
-            $( Form ).data( 'bootstrapValidator', null );
-            this.loadFormValidator( Form );
+            $( this.state.pdoaddDOM ).data( 'bootstrapValidator' ).destroy();
+            $( this.state.pdoaddDOM ).data( 'bootstrapValidator', null );
+            //this.loadFormValidator( this.state.pdoaddDOM );
         }
 
         this.setState( {
@@ -69,17 +119,21 @@ var AddPDO = React.createClass( {
             fileds: []
         });
     },
-    
-    checkInput: function( name, fileds ) {
-        var Form = this.refs.refCopy;
-        this.props.loadFormValidator( Form );
 
-        var check1 = $( Form ).data( 'bootstrapValidator' );
+    checkInput: function( name, fileds ) {
+        var check1 = $( this.state.pdoaddDOM ).data( 'bootstrapValidator' );
         check1.validate();
         if ( !check1.isValid() ) {
             return false;
         }
-
+        for ( var i = 0; i < this.state.clickNum - 1; i++ ) {
+            for ( var j = i + 1; j < this.state.clickNum; j++ ) {
+                if ( fileds[i] == fileds[j] ) {
+                    alert( "字段不可重复！" );
+                    return false;
+                }
+            }
+        }
         return true;
 
     },
@@ -87,57 +141,34 @@ var AddPDO = React.createClass( {
     subHandle: function( event ) {
 
         if ( !this.checkInput( this.state.name, this.state.fileds ) ) {
-
-            return;
+        } else {
+            $.ajax( {
+                async: false,//阻塞的，保证刷新得到的视图是新的
+                type: "POST",
+                cache: false,
+                url: "api/add",
+                data: this.serializeForStruts2( this.state.name, this.state.fileds )
+            });
+            this.props.freshViewHandle();
+            this.resetForm();
         }
-
-        $.ajax( {
-            async: false,//阻塞的，保证刷新得到的视图是新的
-            type: "POST",
-            cache: false,
-            url: "api/add",
-            data: this.serializeForStruts2( this.state.name, this.state.fileds )
-        });
-
-        this.props.freshViewHandle();
-
-        //$( "#modal-" + this.props.modalType + "-" + this.props.id ).modal( 'hide' );
-        //edit会销毁，add不会，故要恢复纯净状态
-        this.resetForm();
     },
     render: function() {
 
-        var cha = 'rgb(6, 154, 217)';
-        var size = '17px';
-        var items = [];
-        for ( var i = 0; i < this.props.clickNum; i++ ) {
-
-            items.push( <AddPDOitems  key ={i} id={i}
-                StringChangeHandle = {this.StringChangeHandle} /> );
-
-        }
         return (
 
             <div className="col-md-12 column">
-                <form role="form"   ref="refCopy">
-                    <div className="form-group">
-                        <label>PDO name</label>
-                        <input type="text" className="form-control" onChange={this.NameChangeHandle} name = "pdoname" />
-                    </div>
 
-                    {items}
-                    <p></p>
-                    <a href="javascript:void(0)">
-                        <span onClick={this.props.clickMe} className="glyphicon glyphicon-plus" style={{ color: cha }}>
-                            Add a new field
-                        </span>
-                    </a>
-
-                    <div className="pull-right">
-                        <button type="submit" className="btn btn-default" onClick={this.subHandle} >Submit</button>
-                        {/*button 按钮点击第一次 校验 还需点击第二次 尚未解决*/}
-                    </div>
-                </form>
+                <AddPDOdom  clickNum = {this.state.clickNum}
+                    clickMe = {this.clickMe}
+                    name = {this.state.name}
+                    fileds = {this.state.fileds}
+                    NameChangeHandle = {this.NameChangeHandle}
+                    StringChangeHandle = {this.StringChangeHandle}
+                    pdoaddDOMHandle = {this.pdoaddDOMHandle}
+                    loadFormValidator = {this.loadFormValidator}
+                    subHandle = {this.subHandle}
+                    />
             </div>
         );
     }
