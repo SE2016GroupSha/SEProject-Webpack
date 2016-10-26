@@ -43,7 +43,7 @@ var AddPDO = React.createClass( {
                         }
                     }
                 },
-                0: {
+                '0': {
                     validators: {
                         notEmpty: {
                             message: 'pdoname不能为空'
@@ -112,20 +112,17 @@ var AddPDO = React.createClass( {
         return result;
     },
     resetForm: function() {
-        //仅为add设计，在freshViewHandle后edit会被销毁，即无需考虑
 
         var check = $(this.state.pdoaddDOM).data('bootstrapValidator'); 
 
         if (typeof(check)!="undefined") {
+            
             $(this.state.pdoaddDOM).data('bootstrapValidator').destroy();
             $(this.state.pdoaddDOM).data('bootstrapValidator', null);
             this.loadFormValidator(this.state.pdoaddDOM);
         }
         
-        this.setState( {
-            name: '',
-            fileds: []
-        });
+        
     },
 
     checkInput: function( name, fileds ) {
@@ -137,7 +134,8 @@ var AddPDO = React.createClass( {
         for ( var i = 0; i < this.state.clickNum - 1; i++ ) {
             for ( var j = i + 1; j < this.state.clickNum; j++ ) {
                 if ( fileds[i] == fileds[j] ) {
-                    alert( "字段不可重复！" );
+                    
+                    alert( "字段不可重复！");
                     return false;
                 }
             }
@@ -158,7 +156,7 @@ var AddPDO = React.createClass( {
                 data: this.serializeForStruts2( this.state.name, this.state.fileds )
             });
             this.props.freshViewHandle();
-            
+            alert("添加成功")
             this.resetForm();
         }
     },

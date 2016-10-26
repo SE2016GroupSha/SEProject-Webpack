@@ -26,7 +26,7 @@ var AddPDOdom = React.createClass( {
             items.push( <AddPDOitems  key ={i} id={i}
                 StringChangeHandle = {this.props.StringChangeHandle}
                 fileds = {this.props.fileds}
-            loadFormValidator = {this.props.loadFormValidator}/> );
+                loadFormValidator = {this.props.loadFormValidator}/> );
 
         }
 
@@ -36,7 +36,10 @@ var AddPDOdom = React.createClass( {
                 <form role="form"   ref="refCopy">
                     <div className="form-group">
                         <label>PDO name</label>
-                        <input type="text" className="form-control" onChange={this.props.NameChangeHandle} value = {this.props.name} name = "pdoname" />
+                        <input type="text" className="form-control"
+                            onChange={this.props.NameChangeHandle}
+                            name = "pdoname"
+                            placeholder="请输入PDO名称"/>
                     </div>
 
                     {items}
@@ -49,7 +52,7 @@ var AddPDOdom = React.createClass( {
 
                     <div className="pull-right">
                         <button type="submit" className="btn btn-default" onClick={this.props.subHandle} >Submit</button>
-                        {/*button 按钮点击第一次 校验 还需点击第二次 尚未解决*/}
+
                     </div>
                 </form>
             </div>
