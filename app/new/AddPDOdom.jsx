@@ -25,7 +25,8 @@ var AddPDOdom = React.createClass( {
 
             items.push( <AddPDOitems  key ={i} id={i}
                 StringChangeHandle = {this.props.StringChangeHandle}
-                fileds = {this.props.fileds}/> );
+                fileds = {this.props.fileds}
+            loadFormValidator = {this.props.loadFormValidator}/> );
 
         }
 

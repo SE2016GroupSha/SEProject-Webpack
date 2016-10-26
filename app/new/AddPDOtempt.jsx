@@ -1,4 +1,4 @@
-﻿var AddPDOtempt = React.createClass( {
+var AddPDOtempt = React.createClass( {
 
     render: function() {
 

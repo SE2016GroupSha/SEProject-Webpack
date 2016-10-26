@@ -3,6 +3,7 @@ var AddPDOitems = React.createClass( {
         id: React.PropTypes.number.isRequired,
         StringChangeHandle: React.PropTypes.func.isRequired,
         fileds:React.PropTypes.array.isRequired,
+        loadFormValidator: React.PropTypes.func.isRequired,
     },
     showClearFocus: function() {
         this.refs.show.blur();

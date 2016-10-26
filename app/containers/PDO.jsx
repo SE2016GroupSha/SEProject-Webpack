@@ -13,9 +13,7 @@ var PDO = React.createClass( {
             pdos: [],
         };
     },
- 
-    
-    
+
     componentDidMount: function() {
         //初始状态是loading，在这里做第一次加载
         this.freshViewHandle();
@@ -127,8 +125,10 @@ var PDO = React.createClass( {
                             </div>
                             <div id="collapseThree2" className="panel-collapse collapse">
                                 <div className="panel-body">
-                                    <AddPDO freshViewHandle = {this.freshViewHandle}
-                                        />
+                                {/* <AddPDOtempt/> */}
+                                <AddPDO freshViewHandle = {this.freshViewHandle}
+                                />
+                                  
                                 </div>
                             </div>
                         </div>

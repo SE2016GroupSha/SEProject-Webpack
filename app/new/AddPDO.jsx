@@ -14,7 +14,8 @@ var AddPDO = React.createClass( {
     clickMe: function() {
         var temp = this.state.clickNum + 1;
         var a = ( temp - 1 ).toString;
-
+        
+        
         this.setState( {
             clickNum: temp
         });
@@ -45,7 +46,7 @@ var AddPDO = React.createClass( {
                 0: {
                     validators: {
                         notEmpty: {
-                            message: '首字段不能为空'
+                            message: 'pdoname不能为空'
                         }
                     }
                 }
@@ -55,6 +56,14 @@ var AddPDO = React.createClass( {
         })
             .on( 'success.form.bv', function( e ) {
                 e.preventDefault();
+            })
+
+            .on( 'added.field.bv', function( e, data,i ) {
+                // data.field   --> The field name
+                // data.element --> The new field element
+                // data.options --> The new field options
+                
+                
             });
     },
     pdoaddDOMHandle: function( dom ) {
@@ -105,15 +114,14 @@ var AddPDO = React.createClass( {
     resetForm: function() {
         //仅为add设计，在freshViewHandle后edit会被销毁，即无需考虑
 
-        var check1 = $( this.state.pdoaddDOM ).data( 'bootstrapValidator' );
+        var check = $(this.state.pdoaddDOM).data('bootstrapValidator'); 
 
-
-        if ( typeof ( check1 ) != "undefined" ) {
-            $( this.state.pdoaddDOM ).data( 'bootstrapValidator' ).destroy();
-            $( this.state.pdoaddDOM ).data( 'bootstrapValidator', null );
-            //this.loadFormValidator( this.state.pdoaddDOM );
+        if (typeof(check)!="undefined") {
+            $(this.state.pdoaddDOM).data('bootstrapValidator').destroy();
+            $(this.state.pdoaddDOM).data('bootstrapValidator', null);
+            this.loadFormValidator(this.state.pdoaddDOM);
         }
-
+        
         this.setState( {
             name: '',
             fileds: []
@@ -150,6 +158,7 @@ var AddPDO = React.createClass( {
                 data: this.serializeForStruts2( this.state.name, this.state.fileds )
             });
             this.props.freshViewHandle();
+            
             this.resetForm();
         }
     },
