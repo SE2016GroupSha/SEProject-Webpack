@@ -1,7 +1,10 @@
+require('./css/searchBar.css');
 var SearchBar = React.createClass({
 	getInitialState: function () {
 		return{
-			showSearch: false
+			showSearchText: false,
+			showSearch: false,
+			color: 'none'
 		};
 	},
 	
@@ -9,8 +12,17 @@ var SearchBar = React.createClass({
 		this.setState({showSearch: !this.state.showSearch});
 	},
 	
+	handleMouseEnter: function (e) {
+		this.setState({showSearchText: true});
+		this.setState({color: '#d9edf7'});
+	},
+	
+	handleMouseLeave: function (e) {
+		this.setState({showSearchText: false});
+		this.setState({color: this.state.showSearch ? '#d9edf7' : 'white'});
+	},
+	
 	handleChange: function (e) {
-		alert('1');
 		$.ajax({
 			async: false,
 			type: 'POST',
@@ -28,21 +40,40 @@ var SearchBar = React.createClass({
 	},
 	
 	render: function () {
+		
+		var searchBarIconClass = this.state.showSearch ? 
+		'searchBarIcon bg-info glyphicon glyphicon-chevron-down' : 
+		'searchBarIcon bg-info glyphicon glyphicon-search';
+		
 		return (
 			<div className='row'>
-				<div className='col-xs-6'>
-					<button className='btn btn-primary' onClick={this.handleClick}>
-						<i className='glyphicon glyphicon-search' style={{paddingRight: '10px'}}></i>
-						搜索
-					</button>
+				<div className='col-xs-8'>
+				
+					<div className='searchBarDiv' style={{backgroundColor: this.state.color}}
+					onClick={this.handleClick} 
+					onMouseEnter={this.handleMouseEnter} 
+					onMouseLeave={this.handleMouseLeave}>
+					<i className={searchBarIconClass}></i>
+						{(this.state.showSearchText || this.state.showSearch) && <i className='searchBarText'>搜索</i>}
+					</div>
+					
 					{this.state.showSearch &&(
-					<div style = {{margin: '20px 5px'}}>
-						<label htmlFor="searchInput">模糊搜索</label>
-						<input type="text" className="form-control" id="searchInput" onChange={this.handleChange}/>
-					</div>)}
+					<div className='searchBarBody'>
+						<form role="form">
+							<div className="form-group">
+								<div className="input-group">
+									<input type="text" className="form-control" placeholder='...'/>
+									<span className="input-group-btn">
+										<button type="button" className="btn btn-info">GO</button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+					)}
 
 				</div>
-				<div className='col-xs-6'></div>
+				<div className='col-xs-4'></div>
 			</div>
 		);	
 	}

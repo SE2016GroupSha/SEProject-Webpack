@@ -1,0 +1,19 @@
+.searchBarDiv{
+	cursor: pointer;
+	border-radius: 100px;
+}
+
+.searchBarIcon{
+	color: darkgreen;
+	margin: 3px;
+	padding: 4px;
+	border-radius: 100%;
+}
+
+.searchBarText{
+	color: darkgreen;
+}
+
+.searchBarBody{
+	margin: 20px;
+}
