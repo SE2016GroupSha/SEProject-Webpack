@@ -48,32 +48,35 @@ var SearchBar = React.createClass({
 		return (
 			<div className='row'>
 				<div className='col-xs-8'>
+					<h3> 查看个人数据 <i className = 'small glyphicon glyphicon-list'></i></h3>
+				</div>
 				
-					<div className='searchBarDiv' style={{backgroundColor: this.state.color}}
-					onClick={this.handleClick} 
-					onMouseEnter={this.handleMouseEnter} 
-					onMouseLeave={this.handleMouseLeave}>
-					<i className={searchBarIconClass}></i>
-						{(this.state.showSearchText || this.state.showSearch) && <i className='searchBarText'>搜索</i>}
-					</div>
-					
-					{this.state.showSearch &&(
+				<div className='col-xs-4'>
 					<div className='searchBarBody'>
 						<form role="form">
 							<div className="form-group">
 								<div className="input-group">
-									<input type="text" className="form-control" placeholder='...'/>
+									<input type="text" className="form-control" />
 									<span className="input-group-btn">
-										<button type="button" className="btn btn-info">GO</button>
+										<button type="button" className="btn btn-info">搜索</button>
 									</span>
 								</div>
 							</div>
 						</form>
 					</div>
-					)}
-
 				</div>
-				<div className='col-xs-4'></div>
+				
+				{
+					/*<div className='col-xs-2'>
+						<div className='searchBarDiv' style={{backgroundColor: this.state.color}}
+						onClick={this.handleClick} 
+						onMouseEnter={this.handleMouseEnter} 
+						onMouseLeave={this.handleMouseLeave}>
+						<i className={searchBarIconClass}></i>
+							{(this.state.showSearchText || this.state.showSearch) && <i className='searchBarText'>搜索</i>}
+						</div>
+					</div>*/
+				}
 			</div>
 		);	
 	}
