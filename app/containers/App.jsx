@@ -43,12 +43,14 @@ var App = React.createClass({
 		}
 		
 		return (
-				<div className="container">
+				<div className="container" style={{height:'100%'}}>
+					<div style={{height:'20%', backgroundColor: 'cyan'}}>	
+				</div>
 					<div className="row clearfix">
 						<div className="col-xs-12 column">
 							<div className="row clearfix">
-								<div className="col-xs-1 column">
-								</div>
+							{/*<div className="col-xs-1 column">
+							</div>*/}
 								<div className="col-xs-10 column">
 									<div className="row clearfix">
 										<div className="col-xs-12 column">

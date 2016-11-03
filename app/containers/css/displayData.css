@@ -1,13 +1,36 @@
-.ulArea{
-	background-color: #EEE;
-	padding: 10px;
+.dc{
+	display: flex;
+	flex-direction: column;
 }
-.liArea{
-	background-color: cyan;
-	margin: 10px;
-	padding: 10px;
+
+.dc>.data{
+	display: flex;
+	align-items: flex-start;
 }
-.divArea{
-	background-color: #F80;
-	margin: 10px;
+
+.data>.pic{
+	
+}
+
+.data>.date{
+	
+}
+
+.data>.info{
+	display:flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+.data>.info>.title{
+	
+}
+
+.data>.info>.tags{
+	
+}
+
+.data>.action{
+	display:flex;
+	
 }
