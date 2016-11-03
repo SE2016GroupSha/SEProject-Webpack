@@ -6,18 +6,16 @@ function DisplayData (props) {
 	{
 		datalist.push(				
 			<li className='data' key={"data_"+i}>
-				<div className='date'>
-					<span>{props.data[i].date} </span>
+				<div className='datetime'>
+					<span className="date">{props.data[i].date} </span><br/>
+					<span className="time">{props.data[i].time}</span>
 				</div>
-				<div className='pic'>
-							
+				<div className='dataicon'>
+					<i className="glyphicon glyphic-search"></i>
 				</div>
 				<div className='info'>
 					<span className='title'>{props.data[i].title}</span>
 					<span className='tags'>{props.data[i].place}</span>
-				</div>
-				<div className='action'>
-					<div className="btn btn-info">详细信息</div>
 				</div>
 			</li>
 		);

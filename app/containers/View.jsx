@@ -5,9 +5,9 @@ var View = React.createClass({
 	getInitialState: function () {
 		return {
 			searchKey:[],
-			data:[{title:"陆神和他的女朋友们一起吃饭", date:"2020-15-37", place: "哈尔滨工业大学黑店"},
-				  {title:"陆神和他的女朋友们一起吃饭", date:"2020-15-37", place: "江南豪华酒店"},
-				  {title:"陆神和他的女朋友们一起睡觉", date:"2020-15-37", place: "江南豪华酒店"}]
+			data:[{title:"陆神和他的女朋友们一起吃饭", date:"2020-15-37", time:"13:25:14", place: "哈尔滨工业大学黑店"},
+				  {title:"陆神和他的女朋友们一起吃饭", date:"2020-15-37", time:"18:25:14", place: "江南豪华酒店"},
+				  {title:"陆神和他的女朋友们一起睡觉", date:"2020-15-37", time:"23:25:14", place: "江南豪华酒店"}]
 		}
 	},
 	
