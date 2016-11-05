@@ -33,8 +33,14 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "bootstrapValidator": "^0.5.3",
+	"bootstrap-datepicker": "^1.7.0-dev",
+	"clockpicker": "^0.0.7",
+    "handlebars": "^4.0.5",
     "jquery": "^3.1.1",
+    "jquery-mousewheel": "^3.1.13",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+	"typeahead.js": "^0.11.1",
+	"typeahead.js-bootstrap-css": "^1.2.1"
   }
 }

@@ -30,6 +30,10 @@ build
 # Dependency directories
 node_modules/*
 !node_modules/bootstrapValidator
+!node_modules/bootstrap-datepicker
+!node_modules/clockpicker-gh-pages
+!node_modules/typeahead.js
+!node_modules/typeahead.js-bootstrap-css
 jspm_packages
 
 # Optional npm cache directory
