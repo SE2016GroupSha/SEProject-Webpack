@@ -34,14 +34,33 @@
 
 
 #pdo-dropdown-menu .tt-menu {
-  max-height: 270px;
+  max-height: 310px;
   overflow-y: auto;
 }
 
 
 #data-dropdown-menu .tt-menu {
-  max-height: 270px;
+  max-height: 310px;
   overflow-y: auto;
+}
+
+
+.add-highlight {
+	background-color:#ffff6f;
+	font-weight:normal;
+}
+
+
+
+.search-header {
+  position: relative;
+  padding: 8px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.search-footer {
+  position: relative;
+  padding: 8px;
 }
 
 
@@ -99,6 +118,11 @@
 .search-card:hover .search-card-time-label,
 .search-card.is-active .search-card-time-label {
   color: #fff;
+}
+
+.search-card:hover .add-highlight {
+  color: #fff;
+  background: #55acee;
 }
 
 

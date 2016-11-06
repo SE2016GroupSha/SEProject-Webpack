@@ -3,7 +3,7 @@ require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 require('../node_modules/bootstrapValidator/dist/css/bootstrapValidator.css');
 require('../node_modules/bootstrapValidator/dist/js/bootstrapValidator.js');
 require('../node_modules/bootstrapValidator/dist/js/language/zh_CN.js');
-require('../node_modules/typeahead.js/dist/typeahead.bundle.js');
+require('../node_modules/typeahead.js/dist/typeahead.bundle.mult-highlight.js');
 require('../node_modules/typeahead.js-bootstrap-css/typeaheadjs.css');
 require('../node_modules/clockpicker-gh-pages/dist/bootstrap-clockpicker.css');
 require('../node_modules/clockpicker-gh-pages/dist/bootstrap-clockpicker.js');
