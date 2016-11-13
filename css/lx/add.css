@@ -146,3 +146,57 @@
 .u-posRelative {
   position: relative;
 }
+
+
+
+
+.modal.in .modal-dialog {
+	-webkit-transform:translate(0,-50%);
+	-ms-transform:translate(0,-50%);
+	-o-transform:translate(0,-50%);
+	transform:translate(0,-50%)
+}
+
+.modal-dialog {
+	position:absolute;
+	width:auto;
+	margin:10px auto;
+	left:0;
+	right:0;
+	top:50%
+}
+
+@media (min-width:768px) {
+	.modal-dialog {
+		width:400px;
+		margin:30px auto
+	}
+	.modal-content {
+		-webkit-box-shadow:0 5px 15px rgba(0,0,0,.5);
+		box-shadow:0 5px 15px rgba(0,0,0,.5)
+	}
+	.modal-sm {
+		width:300px
+	}
+}
+
+
+.read-only-input[readonly] {
+    background-color: #fff;
+}
+
+.invalid:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #af7373;  
+}
+
+.invalid::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #af7373;
+}
+
+input.invalid:-ms-input-placeholder{
+    color: #af7373;
+}
+
+input.invalid::-webkit-input-placeholder {
+    color: #af7373;
+}

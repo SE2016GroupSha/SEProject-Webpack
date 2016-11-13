@@ -3,12 +3,9 @@ var Handlebars = require('../../node_modules/handlebars/dist/handlebars.js');
 
 var AddBodyRelatedData = React.createClass({
 	propTypes: {
-		limit: React.PropTypes.number.isRequired
-	},
-	getInitialState: function () {
-		return {
-				
-		};
+		limit: React.PropTypes.number.isRequired,
+		relatedDataChangeHandle: React.PropTypes.func.isRequired,
+		selectDatas: React.PropTypes.array.isRequired
 	},
 	componentDidMount: function () {
 		
@@ -41,19 +38,21 @@ var AddBodyRelatedData = React.createClass({
 		{
 		  name: 'dataSearch',
 		  display: function(param) {
-			return param['name'];
+			//return param['name'];
+			return '';
 		  },
 		  limit: self.props.limit,
 		  source: function(q, sync, async) {
-			  
+			
+			//空格分割关键字，生成http参数
 			var array = q.split(/\s+/);
-			//array.push(q);
 			array = array.filter(function(e){return e!="";});
 			if (array.length==0) {
 				array.push("");
 			}
 			var httpParams = {keys:array};
 			
+			//异步获取数据
 			$.ajax({
 				async: true,//异步
 				type:"POST",
@@ -62,6 +61,7 @@ var AddBodyRelatedData = React.createClass({
 				data: {'params':JSON.stringify(httpParams)},
 				dataType: "json",
 				success: function(data) {
+					//建立pdo的id索引
 					var pdos = data['pdos'];
 					var pdosIndex = {};
 					for (var i=0; i<pdos.length; i++) {
@@ -69,6 +69,7 @@ var AddBodyRelatedData = React.createClass({
 						pdosIndex[id] = pdos[i];
 					}
 					
+					//data的values重新格式化
 					var datas = data['datas'];
 					for (var i=0; i<datas.length; i++) {
 						var pdo = datas[i]['pdo'];
@@ -84,9 +85,12 @@ var AddBodyRelatedData = React.createClass({
 						datas[i]['values'] = pairs;
 					}
 					
+					//data的time重新格式化
 					for (var i=0; i<datas.length; i++) {
 						datas[i]['time'] = new Date(datas[i]['time']).format("yyyy/MM/dd hh:mm");
 					}
+					
+					//投递给typeahead.js
 					async(datas);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -104,17 +108,17 @@ var AddBodyRelatedData = React.createClass({
 		})
 		.on('typeahead:asyncrequest', function() {
 			console.log('data asyncrequest');
+			$(self.refs.spinner).css('display', 'inline');
 		})
 		.on('typeahead:asynccancel', function() {
 			console.log('data asynccancel');
+			$(self.refs.spinner).css('display', 'none');
 		})
 		.on('typeahead:asyncreceive', function() {
 			console.log('data asyncreceive');
+			$(self.refs.spinner).css('display', 'none');
 		})
-		.bind('typeahead:select', function(ev, suggestion) {
-		  console.log('Data Selection: ' + JSON.stringify(suggestion));
-		  self.refs.dataSearch.blur();
-		});
+		.bind('typeahead:select', self.selectCallback);
 		
 		
 		//dataSearch的typeahead的下拉菜单，滚动条到顶部不影响body
@@ -130,48 +134,60 @@ var AddBodyRelatedData = React.createClass({
 		$(this.refs.topStopMenu).find('.tt-menu').on('mousewheel', topStopScroll);
 	},
 	clearFocus: function(item) {
-		switch (item) {
-		case 'dataSelectRemove1' :
-			this.refs.dataSelectRemove1.blur();
-			break;
-		case 'dataSelectRemove2' :
-			this.refs.dataSelectRemove2.blur();
-			break;
-		default:
-			break;
-		}
+		this.refs[item].blur();
+	},
+	selectCallback: function(ev, suggestion) {
+		console.log('Data Selection: ' + JSON.stringify(suggestion));
+		this.refs.dataSearch.blur();
+		this.props.relatedDataChangeHandle('selectData', suggestion);
 	},
 	render: function () {
-		return (
-				<div className="add-body-block">
-					<form className="form-horizontal" role="form">
-										
-						<div className="form-group">
+		
+		var topItem = null;
+		var items = [];
+		
+		var selectDatas = this.props.selectDatas;
+		
+		if (selectDatas.length > 0) {
+			topItem = (
+						<div key={0} className="form-group">
 							<label className="col-md-2 control-label">关联</label>
 							<div className="col-md-10">
 								<div className="form-control" style={{paddingLeft:40}}>
 									<span className="glyphicon glyphicon-paperclip form-control-feedback" style={{color:'#1986B4', left:20}}></span>
-									<span className="label" style={{backgroundColor: '#ededed', color: '#556', fontWeight: 'normal'}}>信息标签信息标签<a href="javascript:void(0)" onClick={alert.bind(null, 'dataSelectRemove1')} onFocus={this.clearFocus.bind(null, 'dataSelectRemove1')} tabIndex="-1" style={{textDecoration: 'none'}} ref="dataSelectRemove1">&nbsp;×</a></span>
+									<span className="label" style={{backgroundColor: '#ededed', color: '#556', fontWeight: 'normal'}}>{selectDatas[0]['name']+' - '+selectDatas[0]['time']}<a href="javascript:void(0)" onClick={this.props.relatedDataChangeHandle.bind(null, 'removeData', 0)} onFocus={this.clearFocus.bind(null, 'dataSelectRemove'+0)} tabIndex="-1" style={{textDecoration: 'none'}} ref={'dataSelectRemove'+0}>&nbsp;×</a></span>
 								</div>
 							</div>
 						</div>
-											
-						<div className="form-group">
+			);
+		}
+		
+		for (var i=1; i<selectDatas.length; i++) {
+			items.push(
+						<div key={i} className="form-group">
 							<label className="col-md-2 control-label"></label>
 							<div className="col-md-10">
 								<div className="form-control" style={{paddingLeft:40}}>
 									<span className="glyphicon glyphicon-paperclip form-control-feedback" style={{color:'#1986B4', left:20}}></span>
-									<span className="label" style={{backgroundColor: '#ededed', color: '#556', fontWeight: 'normal'}}>信息标签信息标签<a href="javascript:void(0)" onClick={alert.bind(null, 'dataSelectRemove2')} onFocus={this.clearFocus.bind(null, 'dataSelectRemove2')} tabIndex="-1" style={{textDecoration: 'none'}} ref="dataSelectRemove2">&nbsp;×</a></span>
+									<span className="label" style={{backgroundColor: '#ededed', color: '#556', fontWeight: 'normal'}}>{selectDatas[i]['name']+' - '+selectDatas[i]['time']}<a href="javascript:void(0)" onClick={this.props.relatedDataChangeHandle.bind(null, 'removeData', i)} onFocus={this.clearFocus.bind(null, 'dataSelectRemove'+i)} tabIndex="-1" style={{textDecoration: 'none'}} ref={'dataSelectRemove'+i}>&nbsp;×</a></span>
 								</div>
 							</div>
 						</div>
-											
+			);
+		}
+		
+		return (
+				<div className="add-body-block">
+					<form className="form-horizontal" role="form">
+					
+						{topItem}
+						{items}
 						<div className="form-group">
-							<label className="col-md-2 control-label"></label>
+							<label className="col-md-2 control-label">{topItem==null?'关联':''}</label>
 							<div className="col-md-10" id="data-dropdown-menu" ref="topStopMenu">
 								<span className="glyphicon glyphicon-search form-control-feedback" style={{color:'#1986B4',left:20}}></span>
 								<input ref="dataSearch" autoComplete="off" type="text" className="form-control" style={{paddingLeft:40, paddingRight:40}} placeholder="请输入关键字，以空格分开" />
-								<img className="form-control-feedback" src={require('../../imgs/spinner.gif')} style={{display: 'normal',width: '20px', height: '20px', top:7, right:30}} />
+								<img ref="spinner" className="form-control-feedback" src={require('../../imgs/spinner.gif')} style={{display: 'normal',width: '20px', height: '20px', top:7, right:30, display:'none'}} />
 							</div>
 						</div>
 

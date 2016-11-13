@@ -127,6 +127,19 @@ app.post('/api/search/fuzzy', urlencodedParser, function (req, res) {
 })
 
 
+app.post('/api/data/add', urlencodedParser, function (req, res) {
+
+	var data;
+	
+	data = {"state":"success"};
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+
 var server = app.listen(8081, function () {
 
   var host = server.address().address;
