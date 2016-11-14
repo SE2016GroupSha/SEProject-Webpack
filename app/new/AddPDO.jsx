@@ -13,13 +13,20 @@ var AddPDO = React.createClass( {
     },
     clickMe: function() {
         var temp = this.state.clickNum + 1;
-        var a = ( temp - 1 ).toString;
         
+        var t_fileds = [];
         
+        for ( var i = 0; i < this.state.fileds.length; i++ ) {
+            t_fileds[i] = this.state.fileds[i];
+        }
+        t_fileds[temp-1] = '';
+
         this.setState( {
+            fileds: t_fileds,
             clickNum: temp
         });
-
+        
+        
     },
     loadFormValidator: function( Form ) {
         $( Form ).bootstrapValidator( {
@@ -35,19 +42,38 @@ var AddPDO = React.createClass( {
                         notEmpty: {
                             message: 'pdoname不能为空'
                         },
+                        stringLength: {
+                            min: 0,
+                            max: 20,
+                            message: 'pdoname在20个字符以内'
+                        },
                         remote: {
                             type: 'POST',
-                            url: 'api/pdonamecheck',
-                            message: 'pdoname已存在',
+                            url: 'api/pdo/checkname',
+                            message: '该pdoname已存在',
                             delay: 500
                         }
                     }
                 },
-                '0': {
+                0: {
                     validators: {
                         notEmpty: {
-                            message: 'pdoname不能为空'
-                        }
+                            message: '首字段不能为空'
+                        },
+                        stringLength: {
+                            min: 0,
+                            max: 10,
+                            message: 'pdoname在20个字符以内'
+                        },
+                    }
+                },
+                1: {
+                    validators: {
+                        stringLength: {
+                            min: 0,
+                            max: 10,
+                            message: 'pdoname在20个字符以内'
+                        },
                     }
                 }
 
@@ -56,73 +82,72 @@ var AddPDO = React.createClass( {
         })
             .on( 'success.form.bv', function( e ) {
                 e.preventDefault();
-            })
-
-            .on( 'added.field.bv', function( e, data,i ) {
-                // data.field   --> The field name
-                // data.element --> The new field element
-                // data.options --> The new field options
-                
-                
             });
     },
     pdoaddDOMHandle: function( dom ) {
-        //alert("dom extend");
         this.setState( {
             pdoaddDOM: dom
         });
     },
     NameChangeHandle: function( event ) {
-        //alert(changeType+", "+event.target.value);
-
-        //wrong: var t_book = this.state.book;
         var t_name = '';
         t_name = event.target.value;
-        console.log( t_name );
+
         this.setState( {
             name: t_name
         });
     },
     StringChangeHandle: function( id, event ) {
-        //alert(changeType+", "+event.target.value);
-        // var inputList = document.getElementsByTagName( "input" );
-        // console.log( inputList );
         var t_fileds = [];
         for ( var i = 0; i < this.state.fileds.length; i++ ) {
             t_fileds[i] = this.state.fileds[i];
         }
         t_fileds[id] = event.target.value;
-        console.log( t_fileds[id] );
-
+     
         this.setState( {
             fileds: t_fileds
         });
     },
     serializeForStruts2: function( name, fileds ) {
-        var result = {};
-        var temp = this.state.fileds[0];
-        result['pdo.name'] = name;
-        for ( var i = 1; i < this.state.fileds.length; i++ ) {
-            temp += ',' + fileds[i];
-        }
-        result['pdo.string'] = temp;
-
+        //{"id":"1", "time":1477410877415, "user":"0", "name":"坐车", "fields":["始点", "终点", "耗时"]}
+        var pdo = {};
+        pdo['id']="-1";
         var q = new Date();
-        result['pdo.createdate'] = q.getTime();
-        return result;
+        pdo['time']=q.getTime();
+        pdo['user']="-1";
+        pdo['name']=name;
+
+        var temp = this.state.fileds[0];
+        for ( var i = 1; i < this.state.fileds.length; i++ ) {
+            if(fileds[i]!=''){
+                temp += ',' + fileds[i];
+            }
+        }
+        pdo['fields']=temp;
+       
+        return pdo;
     },
     resetForm: function() {
 
-        var check = $(this.state.pdoaddDOM).data('bootstrapValidator'); 
+        var check = $( this.state.pdoaddDOM ).data( 'bootstrapValidator' );
 
-        if (typeof(check)!="undefined") {
-            
-            $(this.state.pdoaddDOM).data('bootstrapValidator').destroy();
-            $(this.state.pdoaddDOM).data('bootstrapValidator', null);
-            this.loadFormValidator(this.state.pdoaddDOM);
+        if ( typeof ( check ) != "undefined" ) {
+
+            $( this.state.pdoaddDOM ).data( 'bootstrapValidator' ).destroy();
+            $( this.state.pdoaddDOM ).data( 'bootstrapValidator', null );
+            this.loadFormValidator( this.state.pdoaddDOM );
         }
-        
-        
+        var t_fileds = [];
+        for ( var i = 0; i < this.state.fileds.length; i++ ) {
+            t_fileds[i] = '';
+        }
+     
+     
+        this.setState( {
+            fileds: t_fileds,
+            name:''
+        });
+
     },
 
     checkInput: function( name, fileds ) {
@@ -133,9 +158,9 @@ var AddPDO = React.createClass( {
         }
         for ( var i = 0; i < this.state.clickNum - 1; i++ ) {
             for ( var j = i + 1; j < this.state.clickNum; j++ ) {
-                if ( fileds[i] == fileds[j] ) {
+                if ( fileds[i] == fileds[j] && fileds[i]!= '') {
                     
-                    alert( "字段不可重复！");
+                    alert( "字段不可重复！"+fileds[i]+fileds[j]);
                     return false;
                 }
             }
@@ -145,18 +170,20 @@ var AddPDO = React.createClass( {
     },
 
     subHandle: function( event ) {
-
+        var pdoArray=[];
+        pdoArray.push(this.serializeForStruts2( this.state.name, this.state.fileds ));
+        var httpParams = {'pdos': pdoArray};
         if ( !this.checkInput( this.state.name, this.state.fileds ) ) {
         } else {
             $.ajax( {
                 async: false,//阻塞的，保证刷新得到的视图是新的
                 type: "POST",
                 cache: false,
-                url: "api/add",
-                data: this.serializeForStruts2( this.state.name, this.state.fileds )
+                url: "api/pdo/add",
+                data: {'params':JSON.stringify(httpParams)},
             });
             this.props.freshViewHandle();
-            alert("添加成功")
+            alert( "添加成功" )
             this.resetForm();
         }
     },
@@ -165,7 +192,7 @@ var AddPDO = React.createClass( {
         return (
 
             <div className="col-md-12 column">
-
+            
                 <AddPDOdom  clickNum = {this.state.clickNum}
                     clickMe = {this.clickMe}
                     name = {this.state.name}

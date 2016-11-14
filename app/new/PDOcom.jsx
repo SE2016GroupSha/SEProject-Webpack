@@ -14,11 +14,11 @@ var PDOcom = React.createClass( {
         var modals = [];
 
         if ( this.props.failed ) {
-            items.push( <tr key={0}><td colSpan="2" style={{ textAlign: 'center' }}>好像网络不太好啊⊙﹏⊙</td></tr> );
+            items.push( <tr key={0}><td colSpan="3" style={{ textAlign: 'center' }}>好像网络不太好啊⊙﹏⊙</td></tr> );
         } else if ( this.props.loading ) {
-            items.push( <tr key={0}><td colSpan="2" style={{ textAlign: 'center' }}>Loading......</td></tr> );
+            items.push( <tr key={0}><td colSpan="3" style={{ textAlign: 'center' }}>Loading......</td></tr> );
         } else if ( this.props.pdos.length == 0 ) {
-            items.push( <tr key={0}><td colSpan="2" style={{ textAlign: 'center' }}>没有符合条件的记录</td></tr> );
+            items.push( <tr key={0}><td colSpan="3" style={{ textAlign: 'center' }}>没有符合条件的记录</td></tr> );
         } else {
             for ( var i = 0; i < this.props.pdos.length; i++ ) {
                 items.push( <PDOItem key={i} id={i} pdo={this.props.pdos[i]}/> );
@@ -26,27 +26,31 @@ var PDOcom = React.createClass( {
             }
         }
         return (
-            <table className="table table-bordered table-hover">
-                <thead >
-                    <tr>
-                    
-                        <th id="table-header-author" width="25%" style={{ textAlign: 'center' }}>
-                            PDO-name
-                        </th>
-                        <th id="table-header-author" width="55%" style={{ textAlign: 'center' }}>
-                            something
-                        </th>
-                        <th id="table-header-author" width="20%" style={{ textAlign: 'center' }}>
-                            see_detail
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+            <div className="row clearfix">
+                <div className="col-md-12 column">
+                    <table className="table table-bordered table-hover table-condensed">
+                        <thead >
+                            <tr>
 
-                    {items}
-                </tbody>
-                {modals}
-            </table>
+                                <th id="table-header-author" width="25%" style={{ textAlign: 'center' }}>
+                                    PDO-name
+                                </th>
+                                <th id="table-header-author" width="55%" style={{ textAlign: 'center' }}>
+                                    create time
+                                </th>
+                                <th id="table-header-author" width="20%" style={{ textAlign: 'center' }}>
+                                    see_detail
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {items}
+                        </tbody>
+                        {modals}
+                    </table>
+                </div>
+            </div>
 
         );
     }

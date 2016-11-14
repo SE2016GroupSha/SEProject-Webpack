@@ -6,7 +6,6 @@
             // The maximum number of options
             var MAX_OPTIONS = 5;
 
-            alert( "get" );
 
             $( '#surveyForm' )
                 .bootstrapValidator( {

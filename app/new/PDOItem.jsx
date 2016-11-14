@@ -19,7 +19,7 @@ var PDOItem = React.createClass( {
                     {this.props.pdo.name}
                 </td>
                 <td width="55%" style={{ textAlign: 'center' }}>
-                    {this.props.pdo.string}
+                    {this.props.pdo.time}
                 </td>
                 <td width="20%" style={{ textAlign: 'center' }}>
                     <a onFocus={this.showClearFocus} ref="show" href={"#modal-show-" + this.props.id} role="button" className="btn" data-toggle="modal">

@@ -49,10 +49,10 @@ var PDO = React.createClass( {
 
         //异步获取数据，成功则设置table为数据视图，状态变化引发table更新
         $.ajax( {
-            async: true,
+            async: true,//搜索所有PDO
             type: "POST",
             cache: false,
-            url: "api/pdos",
+            url: "api/pdo/all",
             data: { key: keyData },
             dataType: "json",
             //两个回调，尝试使用时间戳控制回复包时序问题(或许根本不存在这个问题？)
@@ -65,7 +65,6 @@ var PDO = React.createClass( {
                         loading: false,
                         failed: false,
                         pdos: data,//---------------------------
-
                     });
 
                 }
@@ -99,7 +98,7 @@ var PDO = React.createClass( {
                             <div className="panel-heading">
                                 <h4 className="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseThree1">
+                                        href="#collapseThree1" id="tips" >
                                         PDO展示部分
                                     </a>
                                 </h4>
@@ -119,20 +118,27 @@ var PDO = React.createClass( {
                                 <h4 className="panel-title" >
                                     <a data-toggle="collapse" data-parent="#accordion"
                                         href="#collapseThree2" >
-                                        添加PDO{/*style = {{position:'fixed',top :'0xp'}}*/}
+                                        添加PDO
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseThree2" className="panel-collapse collapse">
                                 <div className="panel-body">
-                                {/* <AddPDOtempt/> */}
-                                <AddPDO freshViewHandle = {this.freshViewHandle}
-                                />
-                                  
+                                    {/* <AddPDOtempt/> */}
+                                    <AddPDO freshViewHandle = {this.freshViewHandle}
+                                        />
+
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style={{ position: "fixed", top: "500px", left: "88%" }}>
+                    <a href="#tips" >
+                        <span className="glyphicon glyphicon-plane" style={{ color: "rgb(12, 154, 217)" }}>
+                            Back to top
+                        </span>
+                    </a>
                 </div>
             </div>
         );
