@@ -114,7 +114,7 @@ var AddPDO = React.createClass( {
         pdo['id']="-1";
         var q = new Date();
         pdo['time']=q.getTime();
-        pdo['user']="-1";
+        pdo['user']="0";
         pdo['name']=name;
 
         var temp = this.state.fileds[0];

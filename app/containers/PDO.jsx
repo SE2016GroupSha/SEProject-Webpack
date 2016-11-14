@@ -59,15 +59,15 @@ var PDO = React.createClass( {
             success: ( function( time, data ) {
                 //js事件驱动单线程，代码不会被切走，这里的代码应该安全
                 if ( time > self.state.timestamp ) {
-                    //异步调用，不在当前调用栈中，setState会实时生效
+                    //异步调用，不在当前调用栈中，setState会实时生效                   
                     self.setState( {
                         timestamp: time,
                         loading: false,
                         failed: false,
                         pdos: data,//---------------------------
                     });
-
                 }
+                
                 //alert(data.authors.length+","+data.books.length);
             }).bind( null, ( new Date() ).getTime() ),
             error: ( function( time, jqXHR, textStatus, errorThrown ) {
@@ -105,6 +105,7 @@ var PDO = React.createClass( {
                             </div>
                             <div id="collapseThree1" className="panel-collapse collapse">
                                 <div className="panel-body">
+                                
                                     <PDOcom  loading={this.state.loading}
                                         failed={this.state.failed}
                                         pdos={this.state.pdos}

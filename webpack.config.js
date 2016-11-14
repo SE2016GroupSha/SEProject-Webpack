@@ -26,7 +26,7 @@ module.exports = {
     progress: true,
 	proxy: {
         '/api/*': {
-            target: 'http://localhost:8081',
+            target: 'http://112.74.37.137:8081',
             secure: false
         }
     }

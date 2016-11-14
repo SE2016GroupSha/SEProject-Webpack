@@ -28,7 +28,7 @@ var ShowPDOdetital = React.createClass( {
                                     </div>
                                     <div className="form-group">
                                         <label>string</label>
-                                        <div className="well well-sm">{this.props.pdo.string}</div>
+                                        <div className="well well-sm">{this.props.pdo.fields}</div>
                                     </div>
                                     <div className="form-group">
                                         <label>创建时间</label>

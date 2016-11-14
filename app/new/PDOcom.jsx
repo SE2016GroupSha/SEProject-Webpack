@@ -12,7 +12,7 @@ var PDOcom = React.createClass( {
 
         var items = [];
         var modals = [];
-
+        
         if ( this.props.failed ) {
             items.push( <tr key={0}><td colSpan="3" style={{ textAlign: 'center' }}>好像网络不太好啊⊙﹏⊙</td></tr> );
         } else if ( this.props.loading ) {
