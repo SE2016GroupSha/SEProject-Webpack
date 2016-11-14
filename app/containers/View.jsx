@@ -20,8 +20,7 @@ var View = React.createClass({
 		console.log(this.state.searchKey);
 	},
 	
-	handleShowDetailedData: function() {
-		
+	handleShowDetailedData: function(e) {
 	},
 
 	render: function () {	

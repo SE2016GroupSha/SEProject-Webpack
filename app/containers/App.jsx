@@ -43,9 +43,8 @@ var App = React.createClass({
 		}
 		
 		return (
-				<div className="container" style={{height:'100%'}}>
-					<div style={{height:'20%', backgroundColor: 'cyan'}}>	
-				</div>
+				<div style={{backgroundColor: "#fff"}}>
+				<div className="container">
 					<div className="row clearfix">
 						<div className="col-xs-12 column">
 							<div className="row clearfix">
@@ -77,6 +76,7 @@ var App = React.createClass({
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 		);
 	}
