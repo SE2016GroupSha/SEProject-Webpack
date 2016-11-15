@@ -20,7 +20,7 @@ var AddPDOitems = React.createClass( {
         }
         return (
             <div className="form-group">
-                <label  >Field  {this.props.id+1}</label>
+                <label  >字段  {this.props.id+1}</label>
                 <input type="text"  className="form-control" 
                     onChange={this.props.StringChangeHandle.bind( null, this.props.id ) } 
                 name = {myname}

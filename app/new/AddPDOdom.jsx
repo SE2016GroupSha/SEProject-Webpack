@@ -70,7 +70,7 @@ var AddPDOdom = React.createClass( {
             <div className="col-md-12 column">
                 <form role="form"   ref="refCopy">
                     <div className="form-group">
-                        <label>PDO name</label>
+                        <label>PDO 名称</label>
                         <input type="text" className="form-control"
                             onChange={this.props.NameChangeHandle}
                             name = "pdoname"
@@ -84,7 +84,7 @@ var AddPDOdom = React.createClass( {
                    <div className="col-md-4 column">
                    <a href="javascript:void(0)">
                    <span onClick={this.props.clickMe} className="glyphicon glyphicon-plus" style={{ color: cha }}>
-                       Add a new field
+                       增加字段
                    </span>
                </a>
                    </div>

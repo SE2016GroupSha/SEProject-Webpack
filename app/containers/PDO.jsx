@@ -64,7 +64,7 @@ var PDO = React.createClass( {
                         timestamp: time,
                         loading: false,
                         failed: false,
-                        pdos: data,//---------------------------
+                        pdos: data['pdos'],//---------------------------
                     });
                 }
                 
