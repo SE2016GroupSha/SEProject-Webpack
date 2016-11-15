@@ -118,9 +118,12 @@ var AddPDO = React.createClass( {
         pdo['name']=name;
         var tempt_fileds = [];
         tempt_fileds[0] = this.state.fileds[0];
+        var j = 1; 
         for ( var i = 1; i < this.state.fileds.length; i++ ) {
-            if(fileds[i]!=''){
-                tempt_fileds[i] = fileds[i];
+            
+            if(fileds[i]!=''&&fileds[i]!= null){
+                tempt_fileds[j] = fileds[i];
+                j++;
             }
         }
         pdo['fields']=tempt_fileds;
@@ -181,10 +184,20 @@ var AddPDO = React.createClass( {
                 cache: false,
                 url: "api/pdo/add",
                 data: {'params':JSON.stringify(httpParams)},
+                success:function(data){
+                    if(data['state'] == 'success'){
+                        $("#data-add-success-modal").modal('show');
+                        this.resetForm();
+                    }else{
+                        $("#data-add-failed-modal").modal('show');
+                    }
+                }
+                
+                
             });
             this.props.freshViewHandle();
-            alert( "添加成功" )
-            this.resetForm();
+            
+            
         }
     },
     render: function() {
@@ -203,7 +216,45 @@ var AddPDO = React.createClass( {
                     loadFormValidator = {this.loadFormValidator}
                     subHandle = {this.subHandle}
                     />
+           
+                <div className="modal fade" id="data-add-success-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 className="modal-title" style={{textAlign: 'center'}}>
+                                添加结果
+                            </h4>
+                        </div>
+                        <div className="modal-body" style={{textAlign: 'center'}}>
+                            数据添加成功！
+                        </div>
+                        <div className="modal-footer">
+                             <button type="button" className="btn btn-primary" data-dismiss="modal">确定</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div className="modal fade" id="data-add-failed-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div className="modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 className="modal-title" style={{textAlign: 'center'}}>
+                            添加结果
+                        </h4>
+                    </div>
+                    <div className="modal-body" style={{textAlign: 'center'}}>
+                        数据添加失败！
+                    </div>
+                    <div className="modal-footer">
+                         <button type="button" className="btn btn-primary" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+                
         );
     }
 });
