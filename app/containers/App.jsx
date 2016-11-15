@@ -43,12 +43,13 @@ var App = React.createClass({
 		}
 		
 		return (
+				<div style={{backgroundColor: "#fff"}}>
 				<div className="container">
 					<div className="row clearfix">
 						<div className="col-xs-12 column">
 							<div className="row clearfix">
-								<div className="col-xs-1 column">
-								</div>
+							{/*<div className="col-xs-1 column">
+							</div>*/}
 								<div className="col-xs-10 column">
 									<div className="row clearfix">
 										<div className="col-xs-12 column">
@@ -75,6 +76,7 @@ var App = React.createClass({
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 		);
 	}
