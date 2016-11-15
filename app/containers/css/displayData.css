@@ -92,6 +92,10 @@
 	color: lightgray;
 }
 
+.info>.tags>.tag-icon{
+	margin:0 15px 0 0;
+}
+
 .data>.action{
 	display:flex;
 	

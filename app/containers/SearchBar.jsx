@@ -12,7 +12,7 @@ var SearchBar = React.createClass({
 						<form role="form">
 							<div className="form-group">
 								<div className="input-group">
-									<input type="text" className="form-control" onBlur={this.props.onBlur}/>
+									<input id="searchInput" type="text" className="form-control" onBlur={this.props.onBlur} onKeyDown={this.props.cancelEnter}/>
 									<span className="input-group-btn">
 										<button type="button" className="btn btn-info" onClick={this.props.onClick}>搜索</button>
 									</span>
