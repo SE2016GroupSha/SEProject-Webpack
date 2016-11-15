@@ -40,17 +40,17 @@ var AddPDO = React.createClass( {
                 pdoname: {
                     validators: {
                         notEmpty: {
-                            message: 'pdoname不能为空'
+                            message: 'PDO名称不能为空'
                         },
                         stringLength: {
                             min: 0,
                             max: 20,
-                            message: 'pdoname在20个字符以内'
+                            message: 'PDO名称在20个字符以内'
                         },
                         remote: {
                             type: 'POST',
                             url: 'api/pdo/checkname',
-                            message: '该pdoname已存在',
+                            message: '该PDO名称已存在',
                             delay: 500
                         }
                     }
@@ -62,8 +62,8 @@ var AddPDO = React.createClass( {
                         },
                         stringLength: {
                             min: 0,
-                            max: 10,
-                            message: 'pdoname在20个字符以内'
+                            max: 20,
+                            message: '字段在20个字符以内'
                         },
                     }
                 },
@@ -71,8 +71,8 @@ var AddPDO = React.createClass( {
                     validators: {
                         stringLength: {
                             min: 0,
-                            max: 10,
-                            message: 'pdoname在20个字符以内'
+                            max: 20,
+                            message: '字段在20个字符以内'
                         },
                     }
                 }
@@ -116,15 +116,15 @@ var AddPDO = React.createClass( {
         pdo['time']=q.getTime();
         pdo['user']="0";
         pdo['name']=name;
-
-        var temp = this.state.fileds[0];
+        var tempt_fileds = [];
+        tempt_fileds[0] = this.state.fileds[0];
         for ( var i = 1; i < this.state.fileds.length; i++ ) {
             if(fileds[i]!=''){
-                temp += ',' + fileds[i];
+                tempt_fileds[i] = fileds[i];
             }
         }
-        pdo['fields']=temp;
-       
+        pdo['fields']=tempt_fileds;
+       alert(pdo);
         return pdo;
     },
     resetForm: function() {

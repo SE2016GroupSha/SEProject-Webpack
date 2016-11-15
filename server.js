@@ -22,7 +22,7 @@ app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	
 	var data = {"valid": true};
 	//-------------------------------
-	if (req.body.pdoname=='111' || req.body.pdoname=='343' ) {
+	if (req.body.name=='111' || req.body.name=='343' ) {
 		data = {"valid": false};
 	}
 

@@ -95,7 +95,7 @@ var AddPDOdom = React.createClass( {
                 </div>
                    <div className="col-md-4 column">
                     <div className="pull-right">
-                        <button type="submit" className="btn btn-default" onClick={this.props.subHandle} >Submit</button>
+                        <button type="submit" className="btn btn-default" onClick={this.props.subHandle} >提交</button>
                         
                     </div>
                     </div>
