@@ -124,7 +124,7 @@ var AddPDO = React.createClass( {
             }
         }
         pdo['fields']=tempt_fileds;
-       alert(pdo);
+       //alert(pdo);
         return pdo;
     },
     resetForm: function() {
