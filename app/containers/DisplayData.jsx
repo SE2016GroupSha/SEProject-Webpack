@@ -30,12 +30,14 @@ function DisplayData (props) {
 			</li>
 		);
 	}
+	var isEmpty = datalist.length == 0 ? true : false;
 	return (
 	<div className = 'row'>
 		<div className = 'col-xs-12'>
-			<ol className="dc">
-				{datalist}
-			</ol>
+			{	
+				isEmpty &&  <div>没有符合条件的结果</div>
+			}
+			<ol className="dc">{datalist}</ol>
 		</div>
 	</div>
 	);
