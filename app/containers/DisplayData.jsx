@@ -7,9 +7,11 @@ function DisplayData (props) {
 		var tags=[];
 		for(var j = 0; j < props.datas[i].values.length; j++)
 		{
-			tags.push(<div className='tags' key={"data-"+i+"tags-"+j}>
+			tags.push(
+					  <div className='tags' key={"data-"+i+"tag-"+j}>
 						<i className="glyphicon glyphicon-tags tag-icon"></i>
-						<span>{props.datas[i].values[j]}</span>
+						<span>{props.datas[i].pdofields[j]}:</span>
+						<span style = {{marginLeft: "10px"}}>{props.datas[i].values[j]}</span>
 					  </div>);
 		}
 		datalist.push(
@@ -22,9 +24,9 @@ function DisplayData (props) {
 					<i className="glyphicon glyphic-search"></i>
 				</div>
 				<div className='info'>
+					<div className="title" key={"title-"+i}>{props.datas[i].pdoname}</div>
 					{tags}
 				</div>
-				{/*detailedInfo*/}
 			</li>
 		);
 	}

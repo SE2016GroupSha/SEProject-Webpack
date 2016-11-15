@@ -4,15 +4,20 @@ var SearchBar = require('./SearchBar');
 var View = React.createClass({
 	getInitialState: function () {
 		return {
-			searchKey:[],
-			datas:[{"id":"4", "date":"2020-15-37", "time":"13:56:39", "pdo":"1", "values":["家", "学校", "10分钟"]},
-					  {"id":"4", "date":"2020-15-37", "time":"13:56:90", "pdo":"1", "values":["家", "学校", "10分钟"]}],
-			pdos:[{"id":"1", "time":1477410877415, "user":"0", "name":"坐车", "fields":["始点","终点","耗时"]}]
+			searchKey:[""],
+			datas:[],
+			pdos:[]
 		}
 	},
 	
-	handleSearchClick: function(e) {
+	componentWillMount: function(){
+		this.getData();
+	},
+	
+	getData: function() {
 		var httpParams = {"keys":this.state.searchKey};
+		var tdatas;
+		var tpdos;
 		$.ajax({
 			async: false,
 			type: "post",
@@ -21,15 +26,35 @@ var View = React.createClass({
 			data: {"params":JSON.stringify(httpParams)},
 			dataType: "json",
 			success: function(data, textStatus){
-				console.log("success");
 				console.log(data);
 				console.log(textStatus);
-				var rawdatas = data.datas;
-				var rawpdos = data.pdos;
-				for
+				tdatas = data.datas;
+				tpdos = data.pdos;
+				for(var i = 0; i < tdatas.length; i++)
+				{
+					var datetime = new Date(data.datas[i].time).toString().split(" ");
+					tdatas[i].date = datetime[1] + " " + datetime[2] + " " + datetime[3];
+					tdatas[i].time = datetime[4];
+					for(var j = 0; j < tpdos.length; j++)
+					{
+						if (tdatas[i].pdo == tpdos[j].id)
+						{
+							tdatas[i].pdofields = tpdos[j].fields;
+							tdatas[i].pdoname = tpdos[j].name;
+							break;
+						}
+					}
+				}
 			}
 		});
-		return false;
+		this.setState({
+			datas:tdatas,
+			pdos:tpdos
+		});
+	},
+	
+	handleSearchClick: function(e) {
+		this.getData();
 	},
 	
 	handleSearchInput: function(e) {
@@ -54,7 +79,7 @@ var View = React.createClass({
 		return (
 			<div className = 'container-fluid'>
 				<SearchBar onBlur={this.handleSearchInput} onClick={this.handleSearchClick} cancelEnter={this.handleEnterPress}/>
-				<DisplayData datas={this.state.datas} pdos={this.state.pdos} onClick={this.handleShowDetailedData}/>
+				<DisplayData datas={this.state.datas} onClick={this.handleShowDetailedData}/>
 			</div>
 		);
 	}
