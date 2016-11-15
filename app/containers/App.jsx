@@ -68,7 +68,7 @@ var App = React.createClass({
 										<div className="col-xs-10 column">
 											{items}
 										</div>
-									</div>
+                                </div>
 								</div>
 								<div className="col-xs-1 column">
 								</div>
