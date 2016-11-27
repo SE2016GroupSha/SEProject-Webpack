@@ -26,7 +26,7 @@ module.exports = {
     progress: true,
 	proxy: {
         '/api/*': {
-            target: "http://112.74.37.137",
+            target: "http://localhost:8081/",//http://localhost:8081/SEProject-Struts2/
             secure: false
         }
     }

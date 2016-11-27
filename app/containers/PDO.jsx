@@ -67,7 +67,7 @@ var PDO = React.createClass( {
                         pdos: data['pdos'],//---------------------------
                     });
                 }
-                
+
                 //alert(data.authors.length+","+data.books.length);
             }).bind( null, ( new Date() ).getTime() ),
             error: ( function( time, jqXHR, textStatus, errorThrown ) {
@@ -86,62 +86,15 @@ var PDO = React.createClass( {
 
 
     render: function() {
-        var str = 'rgb(255, 140, 60)'
-
-
 
         return (
-            <div className="row clearfix">
-                <div className="col-xs-12 column">
-                    <div  className="panel-group" id="accordion">
-                        <div className="panel panel-info">
-                            <div className="panel-heading">
-                                <h4 className="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseThree1" id="tips" >
-                                        PDO展示部分
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree1" className="panel-collapse collapse">
-                                <div className="panel-body">
-                                
-                                    <PDOcom  loading={this.state.loading}
-                                        failed={this.state.failed}
-                                        pdos={this.state.pdos}
-                                        freshViewHandle={this.freshViewHandle}
-                                        />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="panel panel-info" >
-                            <div className="panel-heading">
-                                <h4 className="panel-title" >
-                                    <a data-toggle="collapse" data-parent="#accordion"
-                                        href="#collapseThree2" >
-                                        添加PDO
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree2" className="panel-collapse collapse">
-                                <div className="panel-body">
-                                    {/* <AddPDOtempt/> */}
-                                    <AddPDO freshViewHandle = {this.freshViewHandle}
-                                        />
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div style={{ position: "fixed", top: "500px", left: "88%" }}>
-                    <a href="#tips" >
-                        <span className="glyphicon glyphicon-plane" style={{ color: "rgb(12, 154, 217)" }}>
-                            Back to top
-                        </span>
-                    </a>
-                </div>
-            </div>
+            <PDOcom  loading={this.state.loading}
+                failed={this.state.failed}
+                pdos={this.state.pdos}
+                freshViewHandle={this.freshViewHandle}
+                />
+
         );
     }
 });

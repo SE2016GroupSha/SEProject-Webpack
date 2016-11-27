@@ -245,7 +245,7 @@ var AddPDO = React.createClass( {
                         </h4>
                     </div>
                     <div className="modal-body" style={{textAlign: 'center'}}>
-                        数据添加失败！
+                        PDO添加失败！
                     </div>
                     <div className="modal-footer">
                          <button type="button" className="btn btn-primary" data-dismiss="modal">确定</button>
