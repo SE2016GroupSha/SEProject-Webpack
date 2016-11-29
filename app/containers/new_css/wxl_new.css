@@ -1,0 +1,31 @@
+.wxl-new1 {
+	position: fixed;
+	left: 0;
+	height: 200%;
+	background-color: #3A3F51;
+	bottom: 0;
+	width: 200px;
+	z-index: -1;
+}
+
+.wxl-new3 {
+	margin-left: 30px;
+}
+
+.wxl-new4 {
+	margin-left: 20px;
+}
+
+.wxl-new5 {
+	margin-right: 45px;
+}
+
+.wxl-new6 {
+	margin-right: 25px;
+}
+
+@media ( max-width : 767px) {
+	.wxl-new1 {
+		background-color: #F0F3F4;
+	}
+}
