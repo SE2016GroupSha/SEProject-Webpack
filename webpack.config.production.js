@@ -4,12 +4,13 @@ var HtmlwebpackPlugin = require('html-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
-var TEM_PATH = path.resolve(ROOT_PATH, 'templates');
+var RES_PATH = path.resolve(ROOT_PATH, 'resource');
+var TEM_PATH = path.resolve(RES_PATH, 'templates');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 module.exports = {
   entry: {
-    app: path.resolve(APP_PATH, 'index.jsx')
+    app: path.resolve(APP_PATH, 'Index.jsx')
   },
   
   output: {
@@ -36,7 +37,7 @@ module.exports = {
 		loader: 'url-loader?limit=1000'
 	  },
 	  {
-		test: /\.(woff|woff2|svg|ttf|eot)$/,
+		test: /\.(woff|woff2|svg|ttf|eot)(\?v=.*)?$/,
 		loader: 'file'
 	  },
 	  {
@@ -52,7 +53,7 @@ module.exports = {
 
   plugins: [
 	new HtmlwebpackPlugin({
-		title: '项目原型版本',
+		title: '项目第二轮',
 		template: path.resolve(TEM_PATH, 'index.html'),
 		filename: 'index.html',
 	}),

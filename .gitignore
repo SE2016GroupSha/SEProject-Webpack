@@ -29,11 +29,8 @@ build
 
 # Dependency directories
 node_modules/*
-!node_modules/bootstrapValidator
-!node_modules/bootstrap-datepicker
-!node_modules/clockpicker-gh-pages
-!node_modules/typeahead.js
-!node_modules/typeahead.js-bootstrap-css
+# 排除忽略,例如git仓库要包含bootstrapValidator,应加下面一行
+#!node_modules/bootstrapValidator
 jspm_packages
 
 # Optional npm cache directory
