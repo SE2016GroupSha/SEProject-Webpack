@@ -27,7 +27,7 @@ module.exports = {
     progress: true,
 	proxy: {
         '/api/*': {
-            target: "http://localhost:8081/",
+            target: "http://localhost:8087/SEProject-Struts2/",
             secure: false
         }
     }
@@ -68,7 +68,7 @@ module.exports = {
 
   plugins: [
 	new HtmlwebpackPlugin({
-		title: '项目第二轮',
+		title: '应用名',
 		template: path.resolve(TEM_PATH, 'index.html'),
 		filename: 'index.html',
 	}),

@@ -53,7 +53,7 @@ module.exports = {
 
   plugins: [
 	new HtmlwebpackPlugin({
-		title: '项目第二轮',
+		title: '应用名',
 		template: path.resolve(TEM_PATH, 'index.html'),
 		filename: 'index.html',
 	}),
