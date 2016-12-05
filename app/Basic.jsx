@@ -1,4 +1,10 @@
-//var Add = require( '../containers/Add' );
+var Orbit = require('./sar/Orbit');
+var Search = require('./sar/Search');
+var AddData = require('./lx/AddData');
+var ViewData = require('./lx/ViewData');
+var AddPDO = require('./wxl/AddPDO');
+var ViewPDO = require('./wxl/ViewPDO');
+var Account = require('./Account');
 
 var Basic = React.createClass( {
     propTypes: {
@@ -6,7 +12,9 @@ var Basic = React.createClass( {
     },
     getInitialState: function() {
         return {
-			username: '游客'
+			username: '游客',
+			currentViewIndex: 0,
+			views: [<Orbit/>, <Search/>, <AddData/>, <ViewData/>, <AddPDO/>, <ViewPDO/>, <Account/>]
         };
     },
     componentDidMount: function() {
@@ -90,6 +98,11 @@ var Basic = React.createClass( {
 		});
 		this.props.BasicHandle('logout');
 	},
+	menuHandle: function(index) {
+		this.setState({
+			currentViewIndex: index
+		});
+	},
     render: function() {
 		return (
 		  <div className="app-header-fixed">
@@ -140,7 +153,7 @@ var Basic = React.createClass( {
 					{/* dropdown */}
 					<ul className="dropdown-menu animated fadeInRight w">
 					  <li>
-						<a>帐号与安全</a>
+						<a onClick={this.menuHandle.bind(null, 6)}>帐号与安全</a>
 					  </li>
 					  <li className="divider"></li>
 					  <li>
@@ -164,12 +177,12 @@ var Basic = React.createClass( {
 				  {/* user */}
 				  <div className="clearfix hidden-xs text-center hide" id="aside-user">
 					<div className="dropdown wrapper">
-					  <a>
+					  <a onClick={this.menuHandle.bind(null, 6)}>
 						<span className="thumb-lg w-auto-folded avatar m-t-sm">
 						  <img src={require('../resource/img/user.jpg')} className="img-full" alt="..."></img>
 						</span>
 					  </a>
-					  <a href="javascript:void(0)" className="hidden-folded">
+					  <a href="javascript:void(0)" className="hidden-folded" onClick={this.menuHandle.bind(null, 6)}>
 						<span className="clear">
 						  <span className="block m-t-sm">
 							<strong className="font-bold text-lt">{this.state.username}</strong> 
@@ -188,13 +201,13 @@ var Basic = React.createClass( {
 						<span>操作中心</span>
 					  </li>
 					  <li>
-						<a ref="navA1">
+						<a ref="navA1" onClick={this.menuHandle.bind(null, 0)}>
 						  <i className="glyphicon glyphicon-calendar icon text-info-dker"></i>
 						  <span>轨迹</span>
 						</a>
 					  </li>
 					  <li>
-						<a ref="navA2">
+						<a ref="navA2" onClick={this.menuHandle.bind(null, 1)}>
 						  <i className="glyphicon glyphicon-search icon text-info-lter"></i>
 						  <span>查找</span>
 						</a>
@@ -210,12 +223,12 @@ var Basic = React.createClass( {
 						</a>
 						<ul className="nav nav-sub dk">
 						  <li>
-							<a ref="navA4">
+							<a ref="navA4" onClick={this.menuHandle.bind(null, 2)}>
 							  <span>添加记录</span>
 							</a>
 						  </li>
 						  <li>
-							<a ref="navA5">
+							<a ref="navA5" onClick={this.menuHandle.bind(null, 3)}>
 							  <span>查看记录</span>
 							</a>
 						  </li>
@@ -232,12 +245,12 @@ var Basic = React.createClass( {
 						</a>
 						<ul className="nav nav-sub dk">
 						  <li>
-							<a ref="navA7">
+							<a ref="navA7" onClick={this.menuHandle.bind(null, 4)}>
 							  <span>添加模板</span>
 							</a>
 						  </li>
 						  <li>
-							<a ref="navA8">
+							<a ref="navA8" onClick={this.menuHandle.bind(null, 5)}>
 							  <span>查看模板</span>
 							</a>
 						  </li>
@@ -250,7 +263,7 @@ var Basic = React.createClass( {
 						<span>用户中心</span>
 					  </li>  
 					  <li>
-						<a ref="navA9">
+						<a ref="navA9" onClick={this.menuHandle.bind(null, 6)}>
 						  <i className="icon-user icon text-success-lter"></i>
 						  <span>帐号与安全</span>
 						</a>
@@ -265,13 +278,8 @@ var Basic = React.createClass( {
 			{/* /menu */}
 
 			{/* content */}
-			<div className="app-content">
-			  <div className="app-content-body fade-in-up">
-				  <div className="hbox hbox-auto-xs hbox-auto-sm">
-				  
-				  </div>
-			  </div>
-			</div>
+			{/* 把整个app-content交给子组件，子组件布局几乎无限制 */}
+			{this.state.views[this.state.currentViewIndex]}
 			{/* /content */}
 
 			{/* footer */}
