@@ -214,11 +214,11 @@ var Reg = React.createClass( {
 						  <i className="fa fa-exclamation-circle" style={{color:'#7266BA'}}></i>
 						  <span style={{color:'#7266BA'}}>&nbsp;&nbsp;{this.state.msgStr}</span>
 					  </div>
-					  <button type="button" className="btn btn-lg btn-primary btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.regButtonHandle} ref='regDOM3'>注册</button>
+					  <button type="button" className="btn btn-lg btn-primary btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.state.isQuerying?null:this.regButtonHandle} ref='regDOM3'>注册</button>
 					  <div className="line line-dashed" style={{paddingBottom:'20px'}}></div>
 				  
 					  <p className="text-center animated flipInY" ref='regDOM4'><small>已经拥有帐号?</small></p>
-					  <a className="btn btn-lg btn-default btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.loginButtonHandle} ref='regDOM5'>登录</a>
+					  <a className="btn btn-lg btn-default btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.state.isQuerying?null:this.loginButtonHandle} ref='regDOM5'>登录</a>
 					</form>
 				  </div>
 				  <div className="text-center" style={{fontFamily:'Source Sans Pro'}}>

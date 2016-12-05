@@ -10,14 +10,6 @@ app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 	res.end('');
 })
 
-app.post('/api/pdo/all', urlencodedParser, function (req, res) {
-
-	var fs = require('fs');
-	var data = fs.readFileSync('apiTest/new/pdos.json','utf-8');
-
-	console.log(req.body);
-	res.end(data);
-})
 app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	
 	var data = {"valid": true};
@@ -41,7 +33,6 @@ app.post('/api/pdo/all', urlencodedParser, function (req, res) {
 
 	res.end(data);
 })
-
 
 app.get('/api/search/fuzzy', function (req, res) {
 
@@ -71,7 +62,6 @@ app.get('/api/search/fuzzy', function (req, res) {
 	res.end(JSON.stringify(data));
 })
 
-
 app.post('/api/search/fuzzy', urlencodedParser, function (req, res) {
 
 	var data;
@@ -100,7 +90,6 @@ app.post('/api/search/fuzzy', urlencodedParser, function (req, res) {
 	res.end(JSON.stringify(data));
 })
 
-
 app.post('/api/data/add', urlencodedParser, function (req, res) {
 
 	var data;
@@ -113,6 +102,65 @@ app.post('/api/data/add', urlencodedParser, function (req, res) {
 	res.end(JSON.stringify(data));
 })
 
+app.post('/api/user/login', urlencodedParser, function (req, res) {
+
+	var data = {"state":"success"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+app.post('/api/user/logout', urlencodedParser, function (req, res) {
+
+	var data = {"state":"success"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+app.post('/api/user/reg', urlencodedParser, function (req, res) {
+
+	var data = {"state":"success"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+app.post('/api/user/checklogin', urlencodedParser, function (req, res) {
+
+	var data = {"state":"success"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+app.post('/api/user/checkname', urlencodedParser, function (req, res) {
+
+	var data = {"valid":"true"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
+
+app.post('/api/user/username', urlencodedParser, function (req, res) {
+
+	var data = {"state":"success", "username":"luxinxyz"};;
+
+	console.log('POST');
+	console.log(req.body);
+
+	res.end(JSON.stringify(data));
+})
 
 var server = app.listen(8081, function () {
 

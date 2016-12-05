@@ -43,7 +43,7 @@ var Login = React.createClass( {
 	},
 	loginButtonHandle: function() {
 		var self = this;
-		
+		//self.props.LoginHandle('login_success');
 		//判断空用户名，空密码
 		if (this.state.username=='') {
 			this.setState({
@@ -153,11 +153,11 @@ var Login = React.createClass( {
 						  <i className="fa fa-exclamation-circle" style={{color:'#7266BA'}}></i>
 						  <span style={{color:'#7266BA'}}>&nbsp;&nbsp;{this.state.msgStr}</span>
 					  </div>
-					  <button type="button" className="btn btn-lg btn-primary btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.loginButtonHandle} ref='loginDOM3'>登录</button>
+					  <button type="button" className="btn btn-lg btn-primary btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.state.isQuerying?null:this.loginButtonHandle} ref='loginDOM3'>登录</button>
 					  <div className="line line-dashed" style={{paddingBottom:'20px'}}></div>
 				  
 					  <p className="text-center animated flipInY" ref='loginDOM4'><small>还没有帐号?</small></p>
-					  <a className="btn btn-lg btn-default btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.regButtonHandle} ref='loginDOM5'>注册</a>
+					  <a className="btn btn-lg btn-default btn-block animated flipInY" style={{cursor:'pointer'}} disabled={this.state.isQuerying?'disabled':''} onClick={this.state.isQuerying?null:this.regButtonHandle} ref='loginDOM5'>注册</a>
 					</form>
 				  </div>
 				  <div className="text-center" style={{fontFamily:'Source Sans Pro'}}>
