@@ -1,0 +1,40 @@
+﻿.btn-addon-xs i {
+  position: relative;
+  float: left;
+  width: 34px;
+  height: 34px;
+  margin: -7px -12px;
+  margin-right: 12px;
+  line-height: 34px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 2px 0 0 2px;
+}
+
+
+.btn-addon-xs.btn-xs i {
+  width: 22px;
+  height: 22px;
+  padding-top: 0px;
+  margin: -1px -5px;
+  margin-top: -5px;
+  margin-right: 0px;
+  line-height: 30px;
+}
+
+.btn-addon-xs.btn-default i {
+  background-color: transparent;
+}
+
+.my-hover {
+	color: #ddd;
+}
+
+.my-hover:hover {
+	color: #bbb;
+}
+
+.my-mid {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
