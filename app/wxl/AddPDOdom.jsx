@@ -214,7 +214,7 @@ var AddPDOdom = React.createClass( {
 						<footer className="panel-footer text-right bg-light lter">
 						<div className={messageme}>
 						<i className="fa fa-exclamation-circle text-muted text-left new2" style={{color: 'rgb(114, 102, 186)',fontSize:'15px','fontWeight': 'bolder'}}>
-						{this.props.message}</i>
+						&nbsp;{this.props.message}</i>
 						</div>
 						  <a className="btn btn-info" onClick={this.props.clickMe}>增加字段</a>
 						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
