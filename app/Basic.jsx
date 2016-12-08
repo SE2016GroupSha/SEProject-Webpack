@@ -14,7 +14,8 @@ var Basic = React.createClass( {
         return {
 			username: '游客',
 			currentViewIndex: 0,
-			views: [<Orbit/>, <Search/>, <AddData/>, <ViewData/>, <AddPDO/>, <ViewPDO/>, <Account/>]
+			indexfu:0,
+			
         };
     },
     componentDidMount: function() {
@@ -103,7 +104,15 @@ var Basic = React.createClass( {
 			currentViewIndex: index
 		});
 	},
+	menuHandleWxl: function(index,indexerzi) {
+		this.setState({
+			currentViewIndex: index,
+			indexfu:indexerzi
+			
+		});
+	},
     render: function() {
+		var views= [<Orbit/>, <Search/>, <AddData/>, <ViewData/>, <AddPDO indexfu={this.state.indexfu}/>, <ViewPDO menuHandleWxl={this.menuHandleWxl}/>, <Account/>];
 		return (
 		  <div className="app-header-fixed">
 
@@ -279,14 +288,14 @@ var Basic = React.createClass( {
 
 			{/* content */}
 			{/* 把整个app-content交给子组件，子组件布局几乎无限制 */}
-			{this.state.views[this.state.currentViewIndex]}
+			{views[this.state.currentViewIndex]}
 			{/* /content */}
 
-			{/* footer */}
-			<div className="app-footer wrapper b-t bg-light" style={{fontFamily:'Source Sans Pro'}}>
+			{/* footer <div className="app-footer wrapper b-t bg-light" style={{fontFamily:'Source Sans Pro'}}>
 			  <span className="pull-right"><a href="#app" className="m-l-sm text-muted"><i className="fa fa-long-arrow-up"></i></a></span>
 			  <center>SEGroup Sha 2016-2017</center>
-			</div>
+			</div>*/}
+			
 			{/* /footer */}
 		  </div>
 		);

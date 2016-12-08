@@ -43,7 +43,7 @@ var Login = React.createClass( {
 	},
 	loginButtonHandle: function() {
 		var self = this;
-		//self.props.LoginHandle('login_success');
+		self.props.LoginHandle('login_success');
 		//判断空用户名，空密码
 		if (this.state.username=='') {
 			this.setState({

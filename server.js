@@ -12,10 +12,10 @@ app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 
 app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	
-	var data = {"valid": true};
+	var data = {"valid": "true"};
 	//-------------------------------
 	if (req.body.name=='111' || req.body.name=='343' ) {
-		data = {"valid": false};
+		data = {"valid": "false"};
 	}
 
 	console.log(req.body);
@@ -26,7 +26,7 @@ app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 app.post('/api/pdo/all', urlencodedParser, function (req, res) {
 
 	var fs = require('fs');
-	var data = fs.readFileSync('apiTest/lx/allpdo.json','utf-8');
+	var data = fs.readFileSync('test_api/wxl/allpdo.json','utf-8');
 
 	console.log('POST');
 	console.log(req.body);
