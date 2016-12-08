@@ -79,10 +79,9 @@ var AddPDOdom = React.createClass( {
 		for(var i=0;i<this.props.clickNum ;i++){
 			var num = 5+i;
 			var filedname = '字段'+num;
-			var clas = 'form-group ';
-		
+			var thisfiledclassname='form-group'+this.props.message_fileds[i];
 			additems.push(
-							<div className={clas} key={i}>
+							<div className={thisfiledclassname} key={i}>
 								<label>{filedname}
 								</label>
 								<input type="text" className="form-control" placeholder="请添加新字段"  
@@ -122,8 +121,9 @@ var AddPDOdom = React.createClass( {
 		for(var i=0;i<this.props.clickNum ;i++){
 			var num = 4+i;
 			var filedname = '字段'+num;
+			var thisfiledclassname='form-group'+this.props.message_fileds[i];
 			additems.push(
-							<div className="form-group" key={i}>
+							<div className={thisfiledclassname} key={i}>
 								<label>{filedname}</label>
 								<input type="text" className="form-control" placeholder="请添加新字段" 
 								onChange={this.props.StringChangeHandle.bind( null,i) } 
@@ -159,8 +159,9 @@ var AddPDOdom = React.createClass( {
 		for(var i=0;i<this.props.clickNum ;i++){
 			var num = 2+i;
 			var filedname = '字段'+num;
+			var thisfiledclassname='form-group'+this.props.message_fileds[i];
 			additems.push(
-							<div className="form-group" key={i}>
+							<div className={thisfiledclassname} key={i}>
 								<label>{filedname}</label>
 								<input type="text" className="form-control" placeholder="请添加新字段"  
 								onChange={this.props.StringChangeHandle.bind( null,i) } 
@@ -178,17 +179,21 @@ var AddPDOdom = React.createClass( {
 							<input type="text" className="form-control"  onChange={this.props.NameChangeHandle} value={this.props.name}/>
 						</div>
 						<div className="form-group">
-							<label>首字段<em className="text-muted">(首字段不可为空)</em></label>
-							<input type="text" className="form-control" onChange={this.props.firstfiledChangeHandle} value={this.props.firstfiled}/>
+							<label>首字段</label>
+							<input type="text" className="form-control" placeholder="首字段不可为空"  
+							onChange={this.props.firstfiledChangeHandle} value={this.props.firstfiled}/>
 						</div>
 						{additems}
 					</div>
 		);
 	}
-		var messageme = 'text-muted hide';
+	
+		var messageme = 'text-left hide';
 		if(this.props.message!=''){
-			messageme='text-muted';
+			messageme='text-left';
 		}
+		
+		
         return (
 		 <div className="cell-inner">
 			 {/*右侧内容*/}
@@ -206,7 +211,10 @@ var AddPDOdom = React.createClass( {
 						{items}
 						
 						<footer className="panel-footer text-right bg-light lter">
-						<p className={messageme}>{this.props.message}</p>
+						<div className={messageme}>
+						<i className="fa fa-exclamation-circle text-muted text-left new2" style={{color: 'rgb(114, 102, 186)',fontSize:'15px','fontWeight': 'bolder'}}>
+						{this.props.message}</i>
+						</div>
 						  <a className="btn btn-info" onClick={this.props.clickMe}>增加字段</a>
 						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						  <a type="submit" className="btn btn-success" onClick={this.props.subHandle}>提交</a>

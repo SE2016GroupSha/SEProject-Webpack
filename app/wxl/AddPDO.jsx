@@ -104,11 +104,6 @@ var AddPDO = React.createClass( {
 				message_name:' has-error'
 			});
 			return false;
-		}else{
-			this.setState( {
-				message:'',
-				message_name:''
-			});
 		}
 		
 		//检查名称 是否重复
@@ -134,11 +129,6 @@ var AddPDO = React.createClass( {
 				message:'模板名称已存在',
 				message_name:' has-error'
 			});
-		}else{
-			this.setState( {
-				message:'',
-				message_name:''
-			});
 		}
         return flag;
 	},
@@ -159,27 +149,24 @@ var AddPDO = React.createClass( {
 							message:'字段不可重复！',
 							message_fileds:t_message_fileds
 						});
-                    alert( "字段不可重复！"+this.state.fileds[i]+this.state.fileds[j]);
                     return false;
                 }
             }
         }
-		//字段不为空 复原
-		
-		
 		
 		
 		//如果是用户自定义字段检查首字段是否为空
 		if(this.state.index == 3){
 			if(this.state.firstfiled == ''){
 				this.setState( {
-							message:'首字段不可为空！',
-							message_first:' has-error'
-						});
+					message:'首字段不可为空！',
+					message_first:' has-error'
+				});
+				return false;
 			}
-			return false;
 		}
 		
+
 		return true;
     },
 	serializeForStruts2: function( name, fileds ) {
@@ -228,11 +215,22 @@ var AddPDO = React.createClass( {
         var pdoArray=[];
         pdoArray.push(this.serializeForStruts2( this.state.name, this.state.fileds ));
         var httpParams = {'pdos': pdoArray};
+		
+		var t_message_file=[];
+		for(var k=0;k<this.state.message_fileds.length;k++){
+			t_message_file[k]='';
+		}
+		this.setState( {			
+			message_fileds:t_message_file,
+			message_name:'',
+			message_first:'',
+			message:'',
+		});
+		
         if ( !this.checkInputName() ) {
-			
-			
+
         } else if(!this.checkInputFileds()){
-			
+
 		} else {
             $.ajax( {
                 async: false,//阻塞的，保证刷新得到的视图是新的
@@ -241,21 +239,20 @@ var AddPDO = React.createClass( {
                 url: "api/pdo/add",
                 data: {'params':JSON.stringify(httpParams)},
                 success:function(data){
-					alert("添加成功！");	
+					
                 }
             });
 			
-			this.setState( {
-							index:0,
-							name: '',
-							fileds:[],
-							clickNum:0,
-							message_fileds:[],
-							message_name:'',
-							message_first:'',
-							message:'添加成功！',
-							firstfiled:''
-						});		
+			this.setState( {			
+				name: '',
+				fileds:[],
+				clickNum:0,
+				message_fileds:[],
+				message_name:'',
+				message_first:'',
+				message:'添加成功！',
+				firstfiled:''
+			});		
         }
 		
     },
