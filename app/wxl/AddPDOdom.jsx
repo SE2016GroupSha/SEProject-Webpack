@@ -170,6 +170,7 @@ var AddPDOdom = React.createClass( {
 			);
 		}
 		
+		var firstfiledclassname='form-group '+this.props.message_first;
 		
 		items.push(
 					<div className="panel-body" key={3}>
@@ -178,7 +179,7 @@ var AddPDOdom = React.createClass( {
 							<label>模板名称</label>
 							<input type="text" className="form-control"  onChange={this.props.NameChangeHandle} value={this.props.name}/>
 						</div>
-						<div className="form-group">
+						<div className={firstfiledclassname}>
 							<label>首字段</label>
 							<input type="text" className="form-control" placeholder="首字段不可为空"  
 							onChange={this.props.firstfiledChangeHandle} value={this.props.firstfiled}/>

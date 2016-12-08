@@ -36,6 +36,8 @@ var AddPDO = React.createClass( {
             clickNum: temp,
 			message_fileds:t_message_fileds,
         });
+		
+		
     },
 	pdoaddDOMHandle: function( dom ) {
         this.setState( {
@@ -133,7 +135,42 @@ var AddPDO = React.createClass( {
         return flag;
 	},
 	checkInputFileds: function() {
-        //检查字段
+		
+		
+        
+		//如果是用户自定义
+		if(this.state.index == 3){
+			
+			//首先检查首字段是否为空
+			if(this.state.firstfiled == ''){
+				this.setState( {
+					message:'首字段不可为空！',
+					message_first:' has-error'
+				});
+				return false;
+			}
+	
+			//然后检查其余字段是否和首字段重复
+			for(var j=0;j<this.state.clickNum;j++){
+				
+				if(this.state.firstfiled == this.state.fileds[j]){
+					
+					var t_message_fileds=[];
+					for(var k=0;k<this.state.message_fileds.length;k++){
+						t_message_fileds[k]='';
+					}
+					t_message_fileds[j]=' has-error';
+					
+					this.setState( {
+						message:'字段不可重复！',
+						message_first:' has-error',
+						message_fileds:t_message_fileds
+						
+					});
+					return false;
+				}
+			}
+		}
 		for ( var i = 0; i < this.state.clickNum - 1; i++ ) {
             for ( var j = i + 1; j < this.state.clickNum; j++ ) {
                 if ( this.state.fileds[i] == this.state.fileds[j] && this.state.fileds[i]!= '') {
@@ -155,16 +192,7 @@ var AddPDO = React.createClass( {
         }
 		
 		
-		//如果是用户自定义字段检查首字段是否为空
-		if(this.state.index == 3){
-			if(this.state.firstfiled == ''){
-				this.setState( {
-					message:'首字段不可为空！',
-					message_first:' has-error'
-				});
-				return false;
-			}
-		}
+		
 		
 
 		return true;
