@@ -71,7 +71,7 @@ var Orbit = React.createClass( {
 			var _datetime = new Date(_datas[i].time).toString().split(" ");
 			_pnum[_pmap[_datas[i].pdo]] ++;
 			
-			_tl_item["isLeft"] = true;
+			_tl_item["isLeft"] = (_pmap[_datas[i].pdo] % 2 == 0) ? true : false;
 			_tl_item["date"] = _datetime[1] + " " +_datetime[2]// + " " + datetime[3];
 			_tl_item["pdoName"] = _pdo.name;
 			_tl_item["pdoColor"] = this.props.pcolor[_pmap[_datas[i].pdo]];
@@ -104,6 +104,11 @@ var Orbit = React.createClass( {
 		_cur_item["values"] = _data.values;
 		_cur_item["pdoColor"] = this.props.pcolor[this.state.pmap[_data.pdo]];
 		_cur_item["instanceNumber"] = this.state.tl_list[id].instanceNumber;
+		_cur_item["relatedDatas"] = [];
+		for(var i = 0; i < _data.related_data.length; i++)
+		{
+			_cur_item.relatedDatas.push(this.state.tl_list[this.state.dmap[_data.related_data[i]]]);
+		}
 		
 		this.setState({
 			currentItem: _cur_item
@@ -111,14 +116,12 @@ var Orbit = React.createClass( {
 		
 	},
     render: function() {
-		var re_list = [];
-
 		return (
 			<div className="app-content">
 				<div className="app-content-body app-content-full fade-in-up" >
 					<div className="hbox hbox-auto-xs hbox-auto-sm">
 						<Orbit_TimelineDataDisplay items={this.state.tl_list} onClick = {this.handleTimelineClick}/>
-						<Orbit_DetailedDataDisplay item={this.state.currentItem} relatedData={re_list}/>
+						<Orbit_DetailedDataDisplay item={this.state.currentItem}/>
 					</div>
 				</div>
 			</div>

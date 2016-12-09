@@ -22,7 +22,7 @@ function Orbit_TimelineDataDisplay (props) {
 					  <span id={"arrowl_"+i}className="arrow left pull-up hidden-left"></span>
 					  <span id={"arrowr_"+i}className="arrow right pull-up visible-left"></span>
 					<div id={"text_"+i} className="text-lt">
-					  {items[i].pdoName}#{items[i].instanceNumber} ({items[i].pdoDisplayTag.name}: {items[i].pdoDisplayTag.value})
+					  {items[i].pdoName} #{items[i].instanceNumber} ({items[i].pdoDisplayTag.name}: {items[i].pdoDisplayTag.value})
 					</div>
 					</div>
 				  </div>
@@ -33,7 +33,7 @@ function Orbit_TimelineDataDisplay (props) {
 	}
 	else{
 		html_tl_list.push(
-			<h1> 尚无任何记录，赶快添加一些吧:D </h1>
+			<h1> 尚无任何记录，赶快添加吧:D </h1>
 		)
 	}
 
