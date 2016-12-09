@@ -1,6 +1,7 @@
 function Orbit_DetailedDataDisplay (props) {
 	console.log(props.item);
 	var item = props.item;
+	var colors = props.colors;
 	var relatedDatas = props.item.relatedDatas;
 	var title = null;
 	var date = null;
@@ -9,12 +10,12 @@ function Orbit_DetailedDataDisplay (props) {
 	var re_title = null;
 	var re_list = [];
 	var wrapper_style = {
-		backgroundColor: item.pdoColor,
+		backgroundColor: colors[item.pdoColor],
 		color:"white"
 	};
 	var label_style={
 		fontSize:"medium",
-		backgroundColor: item.pdoColor,
+		backgroundColor: colors[item.pdoColor],
 		color:"white", 
 		padding:"4px", 
 		borderRadius:"5px"
@@ -56,20 +57,20 @@ function Orbit_DetailedDataDisplay (props) {
 		}		
 		re_title = (
 				<div className="panel-heading" style={{textAlign:"right", fontSize:"large"}}> 
-				  关联数据
 				  <i className="fa fa-link padder"></i>
+				  关联数据
 				</div>
 			);
 		for(var i = 0; i < relatedDatas.length; i++)
 		{
 			var style = {
-				backgroundColor: relatedDatas[i].pdoColor,
+				backgroundColor: colors[relatedDatas[i].pdoColor],
 				color:"white"
 			};
 			var re_data = (
 				<tr key = {"relatedDatas_"+i}>                    
 				  <td>
-				  {relatedDatas[i].date}
+				  {relatedDatas[i].date} {relatedDatas[i].time.substring(0,5)}
 				  </td>
 				  <td  className="font-thin" style={style}>{relatedDatas[i].pdoName} #{relatedDatas[i].instanceNumber}</td>
 				</tr>
@@ -90,20 +91,24 @@ function Orbit_DetailedDataDisplay (props) {
 		)
 	}
 	return (
-			<div className="col w-lg bg-light dk b-r bg-auto">
-			  {title}
-			  <div className="wrapper">
-			  {date}
-			  {time}
-			  {fields}
+			  <div className="vbox">
+				<div className="row-row">
+				  <div className="cell scrollable">
+					  {title}
+					  <div className="wrapper">
+					  {date}
+					  {time}
+					  {fields}
+					  </div>
+				      {re_title}
+					  <table className="table table-striped m-b-none">
+						<tbody>
+						  {re_list}
+						</tbody>
+					  </table>
+				  </div>
+				</div>
 			  </div>
-			    {re_title}
-				<table className="table table-striped m-b-none">
-				  <tbody>
-				  {re_list}
-				  </tbody>
-				</table>
-			</div>
 	);
 }
 module.exports = Orbit_DetailedDataDisplay;
