@@ -38,3 +38,43 @@
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.panel .b-l-light {
+  border-left-color: #edf1f2;
+}
+
+.panel .b-l-dark {
+  border-left-color: #3a3f51;
+}
+
+.panel .b-l-black {
+  border-left-color: #3a3f51;
+}
+
+.panel .b-l-primary {
+  border-left-color: #7266ba;
+}
+
+.panel .b-l-success {
+  border-left-color: #27c24c;
+}
+
+.panel .b-l-info {
+  border-left-color: #23b7e5;
+}
+
+.panel .b-l-warning {
+  border-left-color: #fad733;
+}
+
+.panel .b-l-danger {
+  border-left-color: #f05050;
+}
+
+.panel .b-l-white {
+  border-left-color: #ffffff;
+}
+
+.my-background-color {
+  background-color: #f6f8f8;
+}
