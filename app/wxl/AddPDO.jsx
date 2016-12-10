@@ -1,4 +1,8 @@
 var AddPDOdom = require('./AddPDOdom.jsx');
+var ExcelUtils = require('./ExcelUtils.jsx');
+var ExcelModle = require('./ExcelModle.jsx');
+
+
 var AddPDO = React.createClass( {
     propTypes: {
 		indexfu:React.PropTypes.number.isRequired
@@ -14,11 +18,104 @@ var AddPDO = React.createClass( {
 			message_name:'',
 			message_first:'',
 			message:'',
-			firstfiled:''
+			firstfiled:'',
+			msg: [],
+			pdos: [],
+			files:[],
+			rightstate: 'unknown',			
         };
     },
     componentDidMount: function() {
     },
+	handleContinue:function(information){
+		if(information=='continue'){
+			this.addAllPDO(this.state.pdos);
+			
+			
+		}else{
+			this.indexClickHandle(0);
+		}
+	},
+	addAllPDO:function(pdos){
+
+		var httpParams = {'pdos': pdos};
+		$.ajax( {
+			async: false,//阻塞的，保证刷新得到的视图是新的
+			type: "POST",
+			cache: false,
+			url: "api/pdo/add",
+			data: {'params':JSON.stringify(httpParams)},
+			success:function(data){
+						
+			}
+		});	
+		this.setState({
+						msg: [],
+						pdos: pdos,
+						rightstate:'success',
+					});
+	},
+	handleFile: function(e) {
+
+		var self = this;
+		var files = e.target.files;
+		var i,f;
+		for (i=0,f=files[i]; i!=files.length; ++i) {
+			
+			var reader = new FileReader();
+			var name = f.name;
+			reader.onload = function(e) {
+	
+				var data = e.target.result;
+				var status = {'state':'unknown'};
+				var pdos = [];
+				var errorMsg = [];
+			
+				ExcelUtils.readPDOFromExcel(data, status, pdos, errorMsg);
+				
+				for (var i=0; i<errorMsg.length; i++) {
+					console.log(errorMsg[i]);
+				}
+				console.log(pdos);
+				console.log(errorMsg.length);
+				
+				if(errorMsg.length!=0){
+					var regx=/格式警告/;
+					var flag = true;
+					for(var k=0;k<errorMsg.length;k++){
+						if(regx.exec(errorMsg[k])== null){
+							flag = false;
+						}
+					}
+					if(flag){
+						console.log('warning');
+						//$("#pdo-add-warning-modal").modal('show');
+						self.setState({
+							msg: errorMsg,
+							pdos: pdos,
+							rightstate:'warning',
+						});
+					}else{
+						console.log('error');
+						self.setState({
+							msg: errorMsg,
+							pdos: pdos,
+							rightstate:'error',
+						});
+						//$("#pdo-add-error-modal").modal('show');
+					}
+				}else{
+					self.addAllPDO(pdos);
+					
+				}
+			};
+			reader.readAsBinaryString(f);
+		}
+		this.setState({
+			files: []
+		});
+	},
+	
 	clickMe: function() {
         var temp = this.state.clickNum+1;
         var t_fileds = [];
@@ -81,6 +178,9 @@ var AddPDO = React.createClass( {
 				firstfiled:'',
 				message_fileds:[],
 				message_first:'',
+				msg: [],
+				pdos: [],
+				rightstate: 'unknown',
 			});
 		}else{
 			this.setState( {
@@ -91,6 +191,9 @@ var AddPDO = React.createClass( {
 				message_fileds:[],
 				message:'',
 				message_first:'',
+				msg: [],
+				pdos: [],
+				rightstate: 'unknown',
 			});
 		}
         
@@ -190,11 +293,6 @@ var AddPDO = React.createClass( {
                 }
             }
         }
-		
-		
-		
-		
-
 		return true;
     },
 	serializeForStruts2: function( name, fileds ) {
@@ -284,8 +382,52 @@ var AddPDO = React.createClass( {
         }
 		
     },
+	
     render: function() {
-		
+		//a onFocus={this.showClearFocus}  href={"#modal-show-" + this.props.id}  className="btn" 
+		var msgs = [];
+			for (var i=0; i<this.state.msg.length; i++) {
+				msgs.push(<p key={i}>{this.state.msg[i]}</p>);
+			}
+			var tables = [];
+			for (var i=0; i<this.state.pdos.length; i++) {
+				var fields = '';
+				for (var j=0; j<this.state.pdos[i]['fields'].length; j++) {
+					fields = fields + this.state.pdos[i]['fields'][j] + '  ';
+				}
+				tables.push(<tr key={i}><td>{this.state.pdos[i]['name']}</td><td>{fields}</td></tr>);
+			}
+			var rightsideview=[];
+			if(this.state.rightstate == 'unknown'){
+				rightsideview.push(
+								<AddPDOdom key={0}
+									firstfiledChangeHandle={this.firstfiledChangeHandle}
+									firstfiled={this.state.firstfiled}
+									index = {this.state.index}
+									clickNum = {this.state.clickNum}
+									clickMe = {this.clickMe}
+									name = {this.state.name}
+									fileds = {this.state.fileds}
+									NameChangeHandle = {this.NameChangeHandle}
+									StringChangeHandle = {this.StringChangeHandle}
+									pdoaddDOMHandle = {this.pdoaddDOMHandle}
+									subHandle = {this.subHandle}
+									message_fileds= {this.state.message_fileds}
+									message_name={this.state.message_name}
+									message_first= {this.state.message_first}
+									message={this.state.message}
+								 />
+				);
+			}else{
+				rightsideview.push(
+									<ExcelModle key={0}
+									pdos={this.state.pdos}
+									mystate={this.state.rightstate}
+									msg={this.state.msg}
+									handleContinue={this.handleContinue}
+									/>
+				);
+			}
 		return (
 			<div className="app-content">
 			  <div className="app-content-body fade-in-up">
@@ -296,7 +438,11 @@ var AddPDO = React.createClass( {
 						  <div className="col w-lg lt b-r">
 							<div className="vbox">
 							  <div className="wrapper">
-							  <button className="pull-right btn m-t-n-xs btn-sm btn-info btn-addon "><i className="fa fa-plus"></i>Excel</button>
+							  <input value={this.state.files} type="file" data-icon="false" data-classbutton="btn btn-default" data-classinput="form-control inline v-middle input-s" id="filestyle-0" tabIndex="-1" style={{'position':'absolute','clip':'rect(0px 0px 0px 0px)'}} onChange={this.handleFile}/>
+								<label htmlFor="filestyle-0" className="pull-right btn m-t-n-xs btn-sm btn-info btn-addon ">
+									<i className="fa fa-plus"></i>
+									Excel											
+								</label>
 								<div className="h4">模板</div>
 							  </div>
 							  <div className="wrapper b-t m-t-xxs">
@@ -339,8 +485,6 @@ var AddPDO = React.createClass( {
 							</div>
 						  </div>
 						  {/*<!-- /column -->*/}
-						  
-						
 						{/*<!-- 右侧 -->*/}
 						  <div className="col">
 							<div className="vbox">	
@@ -348,23 +492,28 @@ var AddPDO = React.createClass( {
 								<div className="cell">
 								{/*右侧内部*/}
 								
-								 <AddPDOdom
-									firstfiledChangeHandle={this.firstfiledChangeHandle}
-									firstfiled={this.state.firstfiled}
-									index = {this.state.index}
-									clickNum = {this.state.clickNum}
-									clickMe = {this.clickMe}
-									name = {this.state.name}
-									fileds = {this.state.fileds}
-									NameChangeHandle = {this.NameChangeHandle}
-									StringChangeHandle = {this.StringChangeHandle}
-									pdoaddDOMHandle = {this.pdoaddDOMHandle}
-									subHandle = {this.subHandle}
-									message_fileds= {this.state.message_fileds}
-									message_name={this.state.message_name}
-									message_first= {this.state.message_first}
-									message={this.state.message}
-								 />
+								{rightsideview}
+											
+								<div className="modal fade" id="pdo-add-error-modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div className="modal-dialog">
+										<div className="modal-content">
+											<div className="modal-header">
+												<button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+												<h4 className="modal-title" style={{textAlign: 'center'}}>
+													Excel 模板导入错误信息提示
+												</h4>
+											</div>
+											<div className="modal-body" style={{textAlign: 'center'}}>
+												{msgs}
+											</div>
+											<div className="modal-footer">
+												 <button type="button" className="btn btn-info" data-dismiss="modal">确定</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								
 								 {/*右侧内部结束*/}
 								</div>
 							  </div>
@@ -374,6 +523,7 @@ var AddPDO = React.createClass( {
 					</div>
 				  </div>
 			  </div>
+			  
 		  </div>
 		);
     }

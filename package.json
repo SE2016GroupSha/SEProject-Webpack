@@ -38,6 +38,7 @@
     "js-md5": "^0.4.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "simple-line-icons": "^2.4.1"
+    "simple-line-icons": "^2.4.1",
+    "xlsx": "^0.8.0"
   }
 }

@@ -12,7 +12,9 @@ module.exports = {
   entry: {
     app: path.resolve(APP_PATH, 'Index.jsx')
   },
-  
+  node: {
+    fs: 'empty'
+  },
   output: {
     path: BUILD_PATH,
     filename: 'bundle.js'

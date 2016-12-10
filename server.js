@@ -6,10 +6,28 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 
 	console.log(req.body);
+	data={'state':'success'};
 
 	res.end('');
+	res.end(JSON.stringify(data));
 })
+app.post('/api/pdo/checknames', urlencodedParser, function (req, res) {
 
+	
+	var json = eval('(' + req.body['params'] + ')'); 
+	var names = json['names'];
+	
+	var data = {};
+	for (var i=0; i<names.length; i++) {
+		if (names[i]=='上学' || names[i]=='吃饭' || names[i]=='支付' || names[i]=='开会' || names[i]=='上班') {
+			data[names[i]] = 'false';
+		} else {
+			data[names[i]] = 'true';
+		}
+	}
+	
+	res.end(JSON.stringify(data));
+})
 app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	
 	var data = {"valid": "true"};

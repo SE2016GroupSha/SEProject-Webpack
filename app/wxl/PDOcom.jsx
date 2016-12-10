@@ -1,7 +1,8 @@
 ﻿var PDOcom = React.createClass( {
     propTypes: {
         pdos: React.PropTypes.array.isRequired,
-		index: React.PropTypes.number.isRequired
+		index: React.PropTypes.number.isRequired,
+		downloadHandle: React.PropTypes.func.isRequired,
     },
 
     render: function() {
@@ -9,24 +10,31 @@
 		var colorname='panel-heading text-center no-border ';// bg-info
 		var i = this.props.index;	
 		var colortext='icon-pin m-r-xs ';//text-info 
+		var colordownload='btn font-bold m ';// 
 		if(i%6 == 0){
 			colorname+='bg-primary';
 			colortext+='text-primary';
+			colordownload+='btn-primary';
 		}else if(i%6 == 1){
 			colorname+='bg-info';
 			colortext+='text-info';
+			colordownload+='btn-info';
 		}else if(i%6 == 2){
 			colorname+='bg-success';
 			colortext+='text-success';
+			colordownload+='btn-success';
 		}else if(i%6 == 3){
 			colorname+='bg-warning';
 			colortext+='text-warning';
+			colordownload+='btn-warning';
 		}else if(i%6 == 4){
 			colorname+='bg-danger';
 			colortext+='text-danger';
+			colordownload+='btn-danger';
 		}else{
 			colorname+='bg-dark';
 			colortext+='text-dark';
+			colordownload+='btn-dark';
 		}
 		
 		var datetime = new Date(this.props.pdos[this.props.index].time);
@@ -61,6 +69,9 @@
 				<ul className="list-group">
 				{fieldsarray}
 				</ul>
+				<div className="panel-footer text-center">
+				  <a  className={colordownload} onClick={this.props.downloadHandle()}>下载模板</a>
+				</div>
 			  </div>
         );
     }
