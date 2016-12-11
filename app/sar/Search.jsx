@@ -3,6 +3,11 @@ var Search = React.createClass( {
     propTypes: {
 
     },
+	getDefaultProps: function() {
+		return {
+			nColor: 11
+		}
+	},
     getInitialState: function() {
         return {
 			searchKeys:[],
@@ -10,10 +15,13 @@ var Search = React.createClass( {
 			pdos:[],
 			dmap:[],
 			pmap:[],
-			pcolor:[],
+			result:[],
 			isLoading: true
         };
     },
+	componentWillMount: function(){
+		this.getSearchData();
+	},
 	getSearchData: function(){
 		var self = this;
 		var key = {"keys":[""]};
@@ -42,40 +50,38 @@ var Search = React.createClass( {
 			_pmap[_pdos[i].id] = i;
 		}
 		
-		// var _pnum = [];
-		// for(var i = 0; i < _pdos.length; i++)
-		// {
-			// _pnum[i] = 0;
-		// }
-		
-		// var _tl_list = [];
-		// for(var i = 0; i < _datas.length; i++)
-		// {
-			// var _tl_item = new Array();
-			// var _pdo = _pdos[_pmap[_datas[i].pdo]];
-			// var _datetime = new Date(_datas[i].time).toString().split(" ");
-			// _pnum[_pmap[_datas[i].pdo]] ++;
-			
-			// _tl_item["isLeft"] = (_pmap[_datas[i].pdo] % 2 == 0) ? true : false;
-			// _tl_item["date"] = _datetime[1] + " " +_datetime[2];// + " " + _datetime[3];
-			// _tl_item["time"] = _datetime[4];
-			// _tl_item["pdoName"] = _pdo.name;
-			// _tl_item["pdoColor"] = _pmap[_datas[i].pdo];
-			// _tl_item["pdoDisplayTag"] = {"name":_pdo.fields[0],"value":_datas[i].values[0]};
-			// _tl_item["instanceNumber"] = _pnum[_pmap[_datas[i].pdo]];
-			
-			// _tl_list.push(_tl_item);
-		// }
+		var _result = [];
+		for(var i = 0; i < _pdos.length; i++)
+		{
+			_result[i] = [];
+		}
+		for(var i = 0; i < _datas.length; i++)
+		{
+			_result[_pmap[_datas[i].pdo]].push(_datas[i]);
+		}
 		
 		this.setState({
 			datas: _datas,
 			pdos: _pdos,
 			dmap: _dmap,
 			pmap: _pmap,
+			result: _result,
 			isLoading: false
 		});
 	},
     render: function() {
+		var result_list = [];
+		for(var i = 0; i < this.state.result.length; i++)
+		{
+			result_list.push(
+			<Search_result
+			key={"result_pdo_"+i}
+			cn={i % this.props.nColor}
+			pdoName={this.state.pdos[i].name}
+			pdoFields={this.state.pdos[i].fields} 
+			datas={this.state.result[i]} />
+			);
+		}
 		return (
 			<div className="app-content">
 				<div className="app-content-body fade-in-up">
@@ -97,12 +103,11 @@ var Search = React.createClass( {
 						</div>
 					  </form>
 					  <p className="m-b-md">
-						在<strong>n</strong>个PDO中共找到了<strong>m</strong>条结果
+						在<strong>{this.state.pdos.length}</strong>个PDO中共找到了<strong>{this.state.datas.length}</strong>条结果
 					  </p>
 					</div>
-					
-					<Search_result />
-					<Search_result />
+					{this.state.isLoading && <div className="text-center"><img src={require("./../../resource/img/sar/loading.jpg")}/></div>}
+					{!this.state.isLoading && result_list}
 				</div>
 		    </div>
 		);

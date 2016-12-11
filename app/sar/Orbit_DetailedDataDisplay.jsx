@@ -1,6 +1,5 @@
 require("./../../resource/css/sar/colors.css");
 function Orbit_DetailedDataDisplay (props) {
-	console.log(props.item);
 	var item = props.item;
 	var colors = props.colors;
 	var relatedDatas = props.item.relatedDatas;
