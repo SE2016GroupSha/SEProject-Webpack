@@ -6,6 +6,11 @@ function Orbit_TimelineDataDisplay (props) {
 	var html_tl_list = [];
 	if(items != [])
 	{	
+		html_tl_list.push(
+			<li className="tl-header" key="tl_header_0">
+			  <div className="btn btn-info" onClick={props.refreshClick}>最近</div>
+			</li>
+		);
 		for(var i = 0; i < items.length; i++)
 		{
 			var wrap_style = {
@@ -17,7 +22,7 @@ function Orbit_TimelineDataDisplay (props) {
 			}
 			html_tl_item = (
 				<li className={"tl-item"+(items[i].isLeft?" tl-left":"")} key = {"tl_list_item_"+i}>
-				  <div id={"wrap_"+i} className="tl-wrap b-success" style = {wrap_style} onClick = {props.onClick}>
+				  <div id={"wrap_"+i} className="tl-wrap b-success" style = {wrap_style} onClick = {props.detailClick}>
 					<span id={"date_"+i} className="tl-date">{items[i].date}</span>
 					<div id={"content_"+i} className="tl-content panel padder" style={content_style}>
 					  <span id={"arrowl_"+i}className={"arrow left  pull-up hidden-left color-"+items[i].pdoColor}></span>
@@ -44,7 +49,8 @@ function Orbit_TimelineDataDisplay (props) {
 				  <div className="cell scrollable">
 					<div className="wrapper">
 					  <ul className="timeline timeline-center">
-					  {html_tl_list}
+					  {props.isLoading && <div className="text-center"><img src={require("./../../resource/img/sar/loading.jpg")}/></div>}
+					  {!props.isLoading && html_tl_list}
 					  </ul>
 					</div>
 				  </div>

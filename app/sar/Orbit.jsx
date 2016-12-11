@@ -15,30 +15,29 @@ var Orbit = React.createClass( {
 			currentItem:[],  //当前详细展示的数据
 				   //primary   success   info      warning   danger
 			pcolors:["#7266ba","#27c24c","#23b7e5","#fad733","#f05050",
-					"#631A86","#8A6552","#985F99","#F39237","#A2D729","#414066"]
+					"#631A86","#8A6552","#985F99","#F39237","#A2D729","#414066"],
+			isLoading: true
         };
     },
     componentWillMount: function() {
-		this.init();
+		this.getAllData();
     },
-	init: function(){
+	getAllData: function(){
+		var self = this;
 		var key = {"keys":[""]};
-		var _datas;
-		var _pdos;
-
 		$.ajax({
-			async: false,
+			async: true,
 			type: "post",
 			cache: false,
 			url: "api/search/fuzzy",
 			data: {"params":JSON.stringify(key)},
 			dataType: "json",
 			success: function(receivedData, textStatus){
-				_datas = receivedData.datas;
-				_pdos = receivedData.pdos;
+				self.init(receivedData.datas, receivedData.pdos);
 			}
 		});
-		
+	},
+	init: function(_datas, _pdos){		
 		var _dmap = [];
 		for(var i = 0; i < _datas.length; i++)
 		{
@@ -83,10 +82,10 @@ var Orbit = React.createClass( {
 			pmap: _pmap,
 			pnum: _pnum,
 			tl_list: _tl_list,
+			isLoading: false
 		});
 	},
 	handleTimelineClick: function(e){
-		console.log(e.target);
 		var id = e.target.id.split("_")[1];
 		var _cur_item = [];
 		var _data = this.state.datas[id];
@@ -108,7 +107,12 @@ var Orbit = React.createClass( {
 		this.setState({
 			currentItem: _cur_item
 		});
-		
+	},
+	handleRefreshClick: function(){
+		this.setState({
+			isLoading: true
+		});
+		this.getAllData();
 	},
     render: function() {
 		return (
@@ -116,10 +120,12 @@ var Orbit = React.createClass( {
 				<div className="app-content-body app-content-full fade-in-up" >
 					<div className="hbox hbox-auto-xs hbox-auto-sm">
 					  <div className="col">
-						<Orbit_TimelineDataDisplay 
+						<Orbit_TimelineDataDisplay
+						isLoading={this.state.isLoading}
 						items={this.state.tl_list} 
 						colors={this.state.pcolors}
-						onClick = {this.handleTimelineClick}/>
+						detailClick={this.handleTimelineClick}
+						refreshClick={this.handleRefreshClick}/>
 					  </div>
 					  <div  className="col w-lg bg-light dk b-r bg-auto">
 						<Orbit_DetailedDataDisplay 
