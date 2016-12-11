@@ -16,6 +16,7 @@ var AddPDOdom = React.createClass( {
 		message_name: React.PropTypes.string.isRequired,
 		message_first: React.PropTypes.string.isRequired,
 		message: React.PropTypes.string.isRequired,
+		resetHandle: React.PropTypes.func.isRequired,
     },
 	getInitialState: function() {
         return {
@@ -54,6 +55,7 @@ var AddPDOdom = React.createClass( {
 		
 		items.push(
 					<div className="panel-body" key={0}>
+					<p className="text-muted">用于记录数据内容发生时间字段不需添加</p>
 						<p className="text-muted"> </p>
 						<div className={pdonameclassname}>
 							<label>模板名称</label>
@@ -92,6 +94,7 @@ var AddPDOdom = React.createClass( {
 		}
 		items.push(
 					<div className="panel-body" key={1}>
+						<p className="text-muted">用于记录数据内容发生时间字段不需添加</p>
 						<p className="text-muted"> </p>
 						<div className={pdonameclassname}>
 							<label>模板名称</label>{/*<em className="text-muted">(提示信息)</em>*/}
@@ -133,7 +136,7 @@ var AddPDOdom = React.createClass( {
 		}
 		items.push(
 					<div className="panel-body" key={2}> 
-						<p className="text-muted"> </p>
+						<p className="text-muted">用于记录数据内容发生时间字段不需添加</p>
 						<div className={pdonameclassname}>
 							<label>模板名称</label>
 							<input type="text" className="form-control"  onChange={this.props.NameChangeHandle}  value={this.props.name}/>
@@ -174,7 +177,7 @@ var AddPDOdom = React.createClass( {
 		
 		items.push(
 					<div className="panel-body" key={3}>
-						<p className="text-muted"> </p>
+						<p className="text-muted">用于记录数据内容发生时间字段不需添加</p>
 						<div className={pdonameclassname}>
 							<label>模板名称</label>
 							<input type="text" className="form-control"  onChange={this.props.NameChangeHandle} value={this.props.name}/>
@@ -217,6 +220,8 @@ var AddPDOdom = React.createClass( {
 						&nbsp;{this.props.message}</i>
 						</div>
 						  <a className="btn btn-info" onClick={this.props.clickMe}>增加字段</a>
+						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						  <a type="submit" className="btn btn-warning" onClick={this.props.resetHandle}>重置</a>
 						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						  <a type="submit" className="btn btn-success" onClick={this.props.subHandle}>提交</a>
 						</footer>

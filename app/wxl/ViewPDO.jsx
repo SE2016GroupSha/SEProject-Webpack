@@ -1,6 +1,9 @@
 require('../../resource/css/wxl/wxl.css');
 var PDOcom = require( './PDOcom' );
 
+var XLSX = require('xlsx');
+var FileSaver = require('file-saver');
+
 var ViewPDO = React.createClass( {
     propTypes: {
 		menuHandleWxl:React.PropTypes.func.isRequired
@@ -81,9 +84,41 @@ var ViewPDO = React.createClass( {
         });
 
     },
-	downloadHandle: function(){
+	downloadHandle: function(index, event){
 		//模板下载接口
+			
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for (var i=0; i!=s.length; ++i) {
+				view[i] = s.charCodeAt(i) & 0xFF;
+			}
+			return buf;
+		}
 		
+
+		var workbook = {SheetNames:[], Sheets:{}};
+		var sheetName = this.state.pdos[index]['name'];
+		var worksheet = {};
+		
+		var data = this.state.pdos[index]['fields'];
+		data.push('日期');
+		data.push('时间');
+		for(var i=0; i<data.length; i++) {
+			var cell = {v: data[i]};
+			var cell_ref = XLSX.utils.encode_cell({r:0,c:i});
+			cell.t = 's';
+			worksheet[cell_ref] = cell;
+		}
+		var range = {s: {r:0, c:0}, e: {r:0, c:data.length-1}};
+		worksheet['!ref'] = XLSX.utils.encode_range(range);
+		
+		workbook.SheetNames.push(sheetName);
+		workbook.Sheets[sheetName] = worksheet;
+		
+		var wbout = XLSX.write(workbook, {bookType:'xlsx', bookSST:true, type: 'binary'});
+		FileSaver.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), sheetName+".xlsx")
+
 	},
     render: function() {
 		var theleftwindowclassname='col w-lg lt b-r ';
@@ -287,15 +322,12 @@ var ViewPDO = React.createClass( {
 			  <div className="app-content-body fade-in-up">
 				  <div className="hbox hbox-auto-xs hbox-auto-sm">
 					<div className="app-content-body app-content-full fade-in-up h-full"  >
-					
 						<div className="hbox hbox-auto-xs bg-light ">
-						
-						
 						{/*<!-- column -->*/}
 						  <div className={theleftwindowclassname}>
 							<div className="vbox">
 							  <div className="wrapper">
-								<div className="h4">我的PDO</div>
+								<div className="h4">我的模板</div>
 							  </div>
 							  <div className="row-row">
 								<div className="cell scrollable hover">
@@ -325,10 +357,8 @@ var ViewPDO = React.createClass( {
 								  <br/><br/>
 								 
 									<div className="col-sm-1"></div>
-									
 									<div className="col-sm-9">
 									{PDOdetial}
-									
 									</div>
 									<div className="col-sm-2"></div>
 	

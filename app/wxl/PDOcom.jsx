@@ -70,7 +70,7 @@
 				{fieldsarray}
 				</ul>
 				<div className="panel-footer text-center">
-				  <a  className={colordownload} onClick={this.props.downloadHandle()}>下载模板</a>
+				  <a  className={colordownload} onClick={this.props.downloadHandle.bind(null, this.props.index)}>下载模板</a>
 				</div>
 			  </div>
         );

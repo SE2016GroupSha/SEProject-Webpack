@@ -6,9 +6,8 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 
 	console.log(req.body);
-	data={'state':'success'};
-
-	res.end('');
+	
+	var data = {"state": "success"};
 	res.end(JSON.stringify(data));
 })
 app.post('/api/pdo/checknames', urlencodedParser, function (req, res) {
