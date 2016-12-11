@@ -1,4 +1,5 @@
-require("./../../resource/css/sar/Orbit_timeline.css");
+require("./../../resource/css/sar/colors.css");
+require("./../../resource/css/sar/arrowColors.css");
 function Orbit_TimelineDataDisplay (props) {
 	var items = props.items;
 	var colors = props.colors;
@@ -13,20 +14,14 @@ function Orbit_TimelineDataDisplay (props) {
 		);
 		for(var i = 0; i < items.length; i++)
 		{
-			var wrap_style = {
-				borderColor:colors[items[i].pdoColor]
-			};
-			var content_style = {
-				color:"white",
-				backgroundColor:colors[items[i].pdoColor]
-			}
+			var cn = items[i].pdoNum % props.nColor;
 			html_tl_item = (
 				<li className={"tl-item"+(items[i].isLeft?" tl-left":"")} key = {"tl_list_item_"+i}>
-				  <div id={"wrap_"+i} className="tl-wrap b-success" style = {wrap_style} onClick = {props.detailClick}>
+				  <div id={"wrap_"+i} className={"tl-wrap b-success b-color-"+cn}onClick = {props.detailClick}>
 					<span id={"date_"+i} className="tl-date">{items[i].date}</span>
-					<div id={"content_"+i} className="tl-content panel padder" style={content_style}>
-					  <span id={"arrowl_"+i}className={"arrow left  pull-up hidden-left color-"+items[i].pdoColor}></span>
-					  <span id={"arrowr_"+i}className={"arrow right pull-up visible-left color-"+items[i].pdoColor}></span>
+					<div id={"content_"+i} className={"tl-content panel padder c-white bg-color-"+cn}>
+					  <span id={"arrowl_"+i}className={"arrow left  pull-up hidden-left arrow-color-"+cn}></span>
+					  <span id={"arrowr_"+i}className={"arrow right pull-up visible-left arrow-color-"+cn}></span>
 					<div id={"text_"+i} className="text-lt">
 					  {items[i].pdoName} #{items[i].instanceNumber} ({items[i].pdoDisplayTag.name}: {items[i].pdoDisplayTag.value})
 					</div>

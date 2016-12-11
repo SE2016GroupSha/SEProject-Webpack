@@ -1,3 +1,4 @@
+require("./../../resource/css/sar/colors.css");
 function Orbit_DetailedDataDisplay (props) {
 	console.log(props.item);
 	var item = props.item;
@@ -9,27 +10,22 @@ function Orbit_DetailedDataDisplay (props) {
 	var fields = [];
 	var re_title = null;
 	var re_list = [];
-	var wrapper_style = {
-		backgroundColor: colors[item.pdoColor],
-		color:"white"
-	};
 	var label_style={
 		fontSize:"medium",
-		backgroundColor: colors[item.pdoColor],
-		color:"white", 
 		padding:"4px", 
 		borderRadius:"5px"
 	};
 	if(item.datetime)
 	{
+		var currentColor = item.pdoNum % props.nColor;
 		title = (
-			<div className="wrapper" style={wrapper_style}>
+			<div className={"wrapper c-white bg-color-"+currentColor}>
 			  <h3 className="m-n font-thin">{item.pdoName} #{item.instanceNumber}</h3>
 			</div>
 			)
 		date = 	(
 			<div>
-				<label className="" style={label_style}>日期</label>
+			<label className={"c-white bg-color-"+currentColor} style={label_style}>日期</label>
 				<p className="form-control-static font-bold">
 				{item.datetime[1]} {item.datetime[2]} {item.datetime[3]} 
 				</p>
@@ -37,7 +33,7 @@ function Orbit_DetailedDataDisplay (props) {
 		);
 		time = (
 			<div>
-				<label className="" style={label_style}>时间</label>
+				<label className={"c-white bg-color-"+currentColor} style={label_style}>时间</label>
 				<p className="form-control-static font-bold">
 				{item.datetime[4]} {item.datetime[5]} {item.datetime[6]}
 				</p>
@@ -47,7 +43,7 @@ function Orbit_DetailedDataDisplay (props) {
 		{
 			var field = (
 				<div key = {"attribute_"+i}>
-					<label className="" style={label_style}>{item.pdoFields[i]}</label>
+					<label className={"c-white bg-color-"+currentColor} style={label_style}>{item.pdoFields[i]}</label>
 					<p className="form-control-static font-bold">
 					{item.values[i]}
 					</p>
@@ -63,16 +59,13 @@ function Orbit_DetailedDataDisplay (props) {
 			);
 		for(var i = 0; i < relatedDatas.length; i++)
 		{
-			var style = {
-				backgroundColor: colors[relatedDatas[i].pdoColor],
-				color:"white"
-			};
+			var cn = relatedDatas[i].pdoNum % props.nColor;
 			var re_data = (
 				<tr key = {"relatedDatas_"+i}>                    
 				  <td>
 				  {relatedDatas[i].date} {relatedDatas[i].time.substring(0,5)}
 				  </td>
-				  <td  className="font-thin" style={style}>{relatedDatas[i].pdoName} #{relatedDatas[i].instanceNumber}</td>
+				  <td  className={"font-thin c-white bg-color-"+cn} >{relatedDatas[i].pdoName} #{relatedDatas[i].instanceNumber}</td>
 				</tr>
 			)
 			re_list.push(re_data);

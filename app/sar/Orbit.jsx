@@ -4,6 +4,11 @@ var Orbit = React.createClass( {
     propTypes: {
 
     },
+	getDefaultProps: function() {
+		return {
+			nColor: 11
+		};
+	},
     getInitialState: function() {
         return {
 			datas:[], //保存所有数据
@@ -13,9 +18,6 @@ var Orbit = React.createClass( {
 			pnum:[],  //当前pdo的实例数
 			tl_list:[],//时间轴上显示的数据
 			currentItem:[],  //当前详细展示的数据
-				   //primary   success   info      warning   danger
-			pcolors:["#7266ba","#27c24c","#23b7e5","#fad733","#f05050",
-					"#631A86","#8A6552","#985F99","#F39237","#A2D729","#414066"],
 			isLoading: true
         };
     },
@@ -68,7 +70,7 @@ var Orbit = React.createClass( {
 			_tl_item["date"] = _datetime[1] + " " +_datetime[2];// + " " + _datetime[3];
 			_tl_item["time"] = _datetime[4];
 			_tl_item["pdoName"] = _pdo.name;
-			_tl_item["pdoColor"] = _pmap[_datas[i].pdo];
+			_tl_item["pdoNum"] = _pmap[_datas[i].pdo];
 			_tl_item["pdoDisplayTag"] = {"name":_pdo.fields[0],"value":_datas[i].values[0]};
 			_tl_item["instanceNumber"] = _pnum[_pmap[_datas[i].pdo]];
 			
@@ -96,7 +98,7 @@ var Orbit = React.createClass( {
 		_cur_item["pdoName"] = _pdo.name;
 		_cur_item["pdoFields"] = _pdo.fields;
 		_cur_item["values"] = _data.values;
-		_cur_item["pdoColor"] = this.state.pmap[_data.pdo];
+		_cur_item["pdoNum"] = this.state.pmap[_data.pdo];
 		_cur_item["instanceNumber"] = this.state.tl_list[id].instanceNumber;
 		_cur_item["relatedDatas"] = [];
 		for(var i = 0; i < _data.related_data.length; i++)
@@ -123,14 +125,14 @@ var Orbit = React.createClass( {
 						<Orbit_TimelineDataDisplay
 						isLoading={this.state.isLoading}
 						items={this.state.tl_list} 
-						colors={this.state.pcolors}
+						nColor = {this.props.nColor}
 						detailClick={this.handleTimelineClick}
 						refreshClick={this.handleRefreshClick}/>
 					  </div>
 					  <div  className="col w-lg bg-light dk b-r bg-auto">
 						<Orbit_DetailedDataDisplay 
 						item={this.state.currentItem}
-						colors={this.state.pcolors}/>
+						nColor = {this.props.nColor}/>
 					  </div>
 					</div>
 				</div>
