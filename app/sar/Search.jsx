@@ -71,8 +71,8 @@ var Search = React.createClass( {
 	handleSearchClick: function(e)
 	{
 		var searchKey = document.getElementById("searchInput").value.split(" ");
+		this.setState({isLoading: true});
 		this.getData(searchKey);
-		console.log(searchKey);
 	},
 	handleEnterPress: function(e) {
 		if(e.key == "Enter")

@@ -121,19 +121,16 @@ var Orbit = React.createClass( {
 			<div className="app-content">
 				<div className="app-content-body app-content-full fade-in-up" >
 					<div className="hbox hbox-auto-xs hbox-auto-sm">
-					  <div className="col">
 						<Orbit_TimelineDataDisplay
 						isLoading={this.state.isLoading}
 						items={this.state.tl_list} 
 						nColor = {this.props.nColor}
 						detailClick={this.handleTimelineClick}
 						refreshClick={this.handleRefreshClick}/>
-					  </div>
-					  <div  className="col w-lg bg-light dk b-r bg-auto">
+						
 						<Orbit_DetailedDataDisplay 
 						item={this.state.currentItem}
 						nColor = {this.props.nColor}/>
-					  </div>
 					</div>
 				</div>
 			</div>

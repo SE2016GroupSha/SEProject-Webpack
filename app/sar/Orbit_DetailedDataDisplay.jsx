@@ -1,4 +1,5 @@
 require("./../../resource/css/sar/colors.css");
+
 function Orbit_DetailedDataDisplay (props) {
 	var item = props.item;
 	var colors = props.colors;
@@ -83,10 +84,11 @@ function Orbit_DetailedDataDisplay (props) {
 		)
 	}
 	return (
+			<div  className="col w-lg bg-light dk b-r bg-auto">
 			  <div className="vbox">
 				<div className="row-row">
 				  <div className="cell scrollable">
-					  {title}
+					{title}
 					  <div className="wrapper">
 					  {date}
 					  {time}
@@ -101,6 +103,7 @@ function Orbit_DetailedDataDisplay (props) {
 				  </div>
 				</div>
 			  </div>
+			</div>
 	);
 }
 module.exports = Orbit_DetailedDataDisplay;
