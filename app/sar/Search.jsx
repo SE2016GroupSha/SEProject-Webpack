@@ -10,7 +10,6 @@ var Search = React.createClass( {
 	},
     getInitialState: function() {
         return {
-			searchKeys:[],
 			datas:[],
 			pdos:[],
 			dmap:[],
@@ -20,11 +19,11 @@ var Search = React.createClass( {
         };
     },
 	componentWillMount: function(){
-		this.getSearchData();
+		this.getData([""]);
 	},
-	getSearchData: function(){
+	getData: function(searchKey){
 		var self = this;
-		var key = {"keys":[""]};
+		var key = {"keys":searchKey};
 		$.ajax({
 			async: true,
 			type: "post",
@@ -69,6 +68,20 @@ var Search = React.createClass( {
 			isLoading: false
 		});
 	},
+	handleSearchClick: function(e)
+	{
+		var searchKey = document.getElementById("searchInput").value.split(" ");
+		this.getData(searchKey);
+		console.log(searchKey);
+	},
+	handleEnterPress: function(e) {
+		if(e.key == "Enter")
+		{
+			e.preventDefault()
+			document.getElementById("searchInput").blur();
+			this.handleSearchClick(e);
+		}
+	},
     render: function() {
 		var result_list = [];
 		for(var i = 0; i < this.state.result.length; i++)
@@ -96,9 +109,9 @@ var Search = React.createClass( {
 					<div className="wrapper-md">
 					  <form className="m-b-md">
 						<div className="input-group">
-						  <input type="text" className="form-control input-lg" placeholder="输入关键字" />
+						  <input id="searchInput" type="text" className="form-control input-lg" placeholder="输入关键字" onKeyDown={this.handleEnterPress}/>
 						  <span className="input-group-btn">
-							<button className="btn btn-lg btn-default" type="button">给我搜</button>
+							<button className="btn btn-lg btn-default" type="button" onClick={this.handleSearchClick}>给我搜</button>
 						  </span>
 						</div>
 					  </form>

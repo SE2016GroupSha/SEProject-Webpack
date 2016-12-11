@@ -3,7 +3,6 @@ var Search_result = React.createClass({
 	propTypes: {
 		
 	},
-	
 	render: function()
 	{
 		var ths = [];
@@ -13,7 +12,7 @@ var Search_result = React.createClass({
 			  <i className="fa fa-sort padder"></i></th>
 			  );
 		ths.push(
-			  <th key="time" className="footable-visible footable-sortable">
+			  <th key="time" className="footable-visible footable-sortable" data-hide="phone,tablet">
 			  时间
 			  <i className="fa fa-sort padder"></i></th>
 			  );
