@@ -11,6 +11,30 @@ var Search_result = React.createClass({
 			sortedDatas:this.props.datas
 		}
 	},
+	componentWillMount: function() {
+		//Date的format添加
+		this.dateFormatInject();
+    },
+	dateFormatInject: function () {
+		Date.prototype.format = function(fmt)   
+		{ //author: meizz   
+		  var o = {   
+			"M+" : this.getMonth()+1,                 //月份   
+			"d+" : this.getDate(),                    //日   
+			"h+" : this.getHours(),                   //小时   
+			"m+" : this.getMinutes(),                 //分   
+			"s+" : this.getSeconds(),                 //秒   
+			"q+" : Math.floor((this.getMonth()+3)/3), //季度   
+			"S"  : this.getMilliseconds()             //毫秒   
+		  };   
+		  if(/(y+)/.test(fmt))   
+			fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+		  for(var k in o)   
+			if(new RegExp("("+ k +")").test(fmt))   
+		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+		  return fmt;   
+		};
+	},
 	collapseTable: function(e){
 		console.log(this.state.tabelStyle);
 		this.setState({
@@ -72,8 +96,8 @@ var Search_result = React.createClass({
 			var datetime = new Date(data.time).toString().split(" ");
 			var evenodd = (i % 2 == 0) ? "even" : "odd";
 			var tds = [];
-			tds.push(<td key="row_1_col_0" className="footable-visible">{datetime[1]} {datetime[2]} {datetime[3]}</td>);
-			tds.push(<td key="row_1_col_1" className="footable-visible">{datetime[4]}</td>);
+			tds.push(<td key="row_1_col_0" className="footable-visible">{new Date(data.time).format("yyyy年MM月dd日")}</td>);
+			tds.push(<td key="row_1_col_1" className="footable-visible">{new Date(data.time).format("hh:mm")}</td>);
 			for(var j = 0; j < data.values.length; j ++)
 			{
 				tds.push(<td key={"row_"+i+"_col_"+(j+2)} className="footable-visible">{data.values[j]}</td>)

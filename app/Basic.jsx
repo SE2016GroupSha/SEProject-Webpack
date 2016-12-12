@@ -5,6 +5,7 @@ var ViewData = require('./lx/ViewData');
 var AddPDO = require('./wxl/AddPDO');
 var ViewPDO = require('./wxl/ViewPDO');
 var Account = require('./Account');
+var Excel = require('./Excel');
 
 var Basic = React.createClass( {
     propTypes: {
@@ -25,7 +26,7 @@ var Basic = React.createClass( {
 		for (var i=1; i<=4; i++) {
 			$(this.refs['dataToggleClass' + i]).bind("click", this.dataToggleClassBind);
 		}
-		for (var i=1; i<=9; i++) {
+		for (var i=1; i<=11; i++) {
 			$(this.refs['navA' + i]).bind("click", this.navCollapseBind);
 		}
 		
@@ -112,7 +113,7 @@ var Basic = React.createClass( {
 		});
 	},
     render: function() {
-		var views= [<Orbit/>, <Search/>, <AddData/>, <ViewData/>, <AddPDO indexfu={this.state.indexfu}/>, <ViewPDO menuHandleWxl={this.menuHandleWxl}/>, <Account/>];
+		var views= [<Orbit/>, <Search/>, <AddData/>, <ViewData/>, <AddPDO indexfu={this.state.indexfu}/>, <ViewPDO menuHandleWxl={this.menuHandleWxl}/>, <Account/>, <Excel/>];
 		return (
 		  <div className="app-header-fixed">
 
@@ -261,6 +262,24 @@ var Basic = React.createClass( {
 						  <li>
 							<a ref="navA8" onClick={this.menuHandle.bind(null, 5)}>
 							  <span>查看模板</span>
+							</a>
+						  </li>
+						</ul>
+					  </li>
+					  
+					  <li>
+						<a href className="auto" ref="navA10">
+						  <span className="pull-right text-muted">
+							<i className="fa fa-fw fa-angle-right text"></i>
+							<i className="fa fa-fw fa-angle-down text-active"></i>
+						  </span>
+						  <i className="glyphicon glyphicon-wrench icon text-info-lter"></i>
+						  <span>工具</span>
+						</a>
+						<ul className="nav nav-sub dk">
+						  <li>
+							<a ref="navA11" onClick={this.menuHandle.bind(null, 7)}>
+							  <span>Excel导入</span>
 							</a>
 						  </li>
 						</ul>

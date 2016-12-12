@@ -2,14 +2,54 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
+var fs = require('fs');
+
+var g_index = 4;
+var g_data = eval('(' + fs.readFileSync('test_api/lx/allpdo.json','utf-8') + ')');
+
+app.post('/api/pdo/all', urlencodedParser, function (req, res) {
+
+	res.end(JSON.stringify(g_data));
+})
 
 app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 
-	console.log(req.body);
+	var json = eval('(' + req.body['params'] + ')'); 
+	var pdos = json['pdos']
 	
-	var data = {"state": "success"};
+	for (var i=0; i<pdos.length; i++) {
+		var n = g_index++;
+		pdos[i]['id'] = n.toString();
+		g_data['pdos'].push(pdos[i]);
+	}
+	
+	var data = {state: 'success'};
 	res.end(JSON.stringify(data));
 })
+
+
+// app.post('/api/pdo/add', urlencodedParser, function (req, res) {
+
+	// console.log(req.body);
+	
+	// var data = {"state": "success"};
+	// res.end(JSON.stringify(data));
+// })
+
+// app.post('/api/pdo/all', urlencodedParser, function (req, res) {
+
+	// var fs = require('fs');
+
+	// var data = fs.readFileSync('test_api/lx/allpdo.json','utf-8');
+	// var data = fs.readFileSync('test_api/wxl/allpdo.json','utf-8');
+
+	// console.log('POST');
+	// console.log(req.body);
+
+	// res.end(data);
+// })
+
+
 app.post('/api/pdo/checknames', urlencodedParser, function (req, res) {
 
 	
@@ -40,18 +80,7 @@ app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	res.end(JSON.stringify(data));
 })
 
-app.post('/api/pdo/all', urlencodedParser, function (req, res) {
 
-	var fs = require('fs');
-
-	var data = fs.readFileSync('test_api/lx/allpdo.json','utf-8');
-	//var data = fs.readFileSync('test_api/wxl/allpdo.json','utf-8');
-
-	console.log('POST');
-	console.log(req.body);
-
-	res.end(data);
-})
 
 app.post('/api/data/redata', urlencodedParser, function (req, res) {
 
