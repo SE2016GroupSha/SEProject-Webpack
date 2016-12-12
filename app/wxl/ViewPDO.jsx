@@ -104,7 +104,13 @@ var ViewPDO = React.createClass( {
 		var fieldsData = this.state.pdos[index]['fields'];
 		var data = [];
 		for (var i=0; i<fieldsData.length; i++) {
-			data.push(fieldsData[i]);
+			if (fieldsData[i]=='日期') {
+				data.push('#日期');
+			} else if (fieldsData[i]=='时间') {
+				data.push('#时间');
+			} else {
+				data.push(fieldsData[i]);
+			}
 		}
 		data.push('日期');
 		data.push('时间');

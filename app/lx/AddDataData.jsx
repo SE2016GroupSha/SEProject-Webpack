@@ -252,16 +252,6 @@ var AddDataData = React.createClass( {
 				  <div className="wrapper-sm b-b">
 					<i className="fa fa-plus fa-fw m-r-xs"></i>
 					<a href="javascript:void(0)" style={{fontSize:'15px'}}>添加记录</a>
-					
-					<a href="javascript:void(0)" className="pull-right btn btn-xs btn-default btn-addon-xs" style={{backgroundColor:'#F6F8F8'}}>
-						<i className="fa fa-plus fa-fw m-r-xs"></i>
-						<span style={{borderLeft:'1px solid #dee5e7',paddingLeft:'5px'}}>Excel导入</span>
-					</a>
-						
-					<a href="javascript:void(0)" className="pull-right btn btn-xs btn-default btn-addon-xs" style={{backgroundColor:'#F6F8F8',marginRight:'8px'}}>
-						<i className="fa fa-download fa-fw m-r-xs"></i>
-						<span style={{borderLeft:'1px solid #dee5e7',paddingLeft:'5px'}}>Excel模板</span>
-					</a>
 				  </div>
 				  <div className="row-row">                 {/**/}
 					<div className="cell scrollable hover"> {/**/}
