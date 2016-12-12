@@ -193,7 +193,7 @@ var Reg = React.createClass( {
 			<div className="app-header-fixed">
 			  <div className="fade-in-right-big smooth ng-scope">
 				<div className="container w-xxl w-auto-xs">
-				  <a href="javascript:void(0)" className="navbar-brand block m-t" style={{fontSize:'30px',fontWeight:'normal'}}><i className="fa fa-cube" style={{color:'#7266BA'}}></i>&nbsp;应用名</a>
+				  <a href="javascript:void(0)" className="navbar-brand block m-t" style={{fontSize:'30px',fontWeight:'normal'}}><i className="fa fa-cube" style={{color:'#7266BA'}}></i>&nbsp;足迹</a>
 				  <div className="m-b-lg">
 					<div className="wrapper text-center">
 					  <strong></strong>

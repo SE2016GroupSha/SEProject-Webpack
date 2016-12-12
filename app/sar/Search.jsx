@@ -106,21 +106,27 @@ var Search = React.createClass( {
 						</div>
 					</div>
 					
+					<div className="col-sm-1">
+					</div>
+					<div className="col-sm-9">
 					<div className="wrapper-md">
 					  <form className="m-b-md">
 						<div className="input-group">
 						  <input id="searchInput" type="text" className="form-control input-lg" placeholder="输入关键字" onKeyDown={this.handleEnterPress}/>
 						  <span className="input-group-btn">
-							<button className="btn btn-lg btn-default" type="button" onClick={this.handleSearchClick}>给我搜</button>
+							<button className="btn btn-lg btn-default" type="button" onClick={this.handleSearchClick}>搜索</button>
 						  </span>
 						</div>
 					  </form>
 					  <p className="m-b-md">
-						在<strong>{this.state.pdos.length}</strong>个PDO中共找到了<strong>{this.state.datas.length}</strong>条结果
+						在<strong>{this.state.pdos.length}</strong>个模板中共找到了<strong>{this.state.datas.length}</strong>条结果
 					  </p>
 					</div>
 					{this.state.isLoading && <div className="text-center"><img src={require("./../../resource/img/sar/loading.jpg")}/></div>}
 					{!this.state.isLoading && result_list}
+					</div>
+					<div className="col-sm-2">
+					</div>
 				</div>
 		    </div>
 		);

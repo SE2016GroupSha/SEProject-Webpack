@@ -130,7 +130,7 @@ var Basic = React.createClass( {
 				{/* brand */}
 				<a href="javascript:void(0)" className="navbar-brand text-lt">
 				  <i className="fa fa-cube" style={{color:'#7266BA'}}></i>
-				  <span className="hidden-folded m-l-xs">&nbsp;应用名</span>
+				  <span className="hidden-folded m-l-xs">&nbsp;足迹</span>
 				</a>
 				{/* /brand */}
 			  </div>

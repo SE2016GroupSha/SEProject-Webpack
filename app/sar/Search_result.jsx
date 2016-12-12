@@ -85,7 +85,7 @@ var Search_result = React.createClass({
 			);
 		}
 		return(
-			<div className="panel panel-default">
+			<div className="panel panel-default" style={{marginLeft:'20px',marginRight:'20px'}}>
 				<div className={"panel-heading c-white bg-color-"+this.props.cn} onClick={this.collapseTable}>
 					{this.props.pdoName}
 				</div>

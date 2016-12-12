@@ -101,7 +101,11 @@ var ViewPDO = React.createClass( {
 		var sheetName = this.state.pdos[index]['name'];
 		var worksheet = {};
 		
-		var data = this.state.pdos[index]['fields'];
+		var fieldsData = this.state.pdos[index]['fields'];
+		var data = [];
+		for (var i=0; i<fieldsData.length; i++) {
+			data.push(fieldsData[i]);
+		}
 		data.push('日期');
 		data.push('时间');
 		for(var i=0; i<data.length; i++) {

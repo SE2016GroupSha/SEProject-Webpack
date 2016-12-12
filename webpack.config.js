@@ -70,7 +70,7 @@ module.exports = {
 
   plugins: [
 	new HtmlwebpackPlugin({
-		title: '应用名',
+		title: '足迹',
 		template: path.resolve(TEM_PATH, 'index.html'),
 		filename: 'index.html',
 	}),

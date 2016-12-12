@@ -134,7 +134,7 @@ var AddPDO = React.createClass( {
                 type: "POST",
                 cache: false,
                 url: "api/pdo/checkname",
-                data: {'name':this.state.name},
+                data: {'pdoname':this.state.name},
 				dataType: "json",
                 success:function(data){
 					if(data['valid'] == 'true'){
