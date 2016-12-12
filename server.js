@@ -6,16 +6,33 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 app.post('/api/pdo/add', urlencodedParser, function (req, res) {
 
 	console.log(req.body);
-
-	res.end('');
+	
+	var data = {"state": "success"};
+	res.end(JSON.stringify(data));
 })
+app.post('/api/pdo/checknames', urlencodedParser, function (req, res) {
 
+	
+	var json = eval('(' + req.body['params'] + ')'); 
+	var names = json['names'];
+	
+	var data = {};
+	for (var i=0; i<names.length; i++) {
+		if (names[i]=='上学' || names[i]=='吃饭' || names[i]=='支付' || names[i]=='开会' || names[i]=='上班') {
+			data[names[i]] = 'false';
+		} else {
+			data[names[i]] = 'true';
+		}
+	}
+	
+	res.end(JSON.stringify(data));
+})
 app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 	
-	var data = {"valid": true};
+	var data = {"valid": "true"};
 	//-------------------------------
 	if (req.body.name=='111' || req.body.name=='343' ) {
-		data = {"valid": false};
+		data = {"valid": "false"};
 	}
 
 	console.log(req.body);
@@ -26,7 +43,9 @@ app.post('/api/pdo/checkname', urlencodedParser, function (req, res) {
 app.post('/api/pdo/all', urlencodedParser, function (req, res) {
 
 	var fs = require('fs');
+
 	var data = fs.readFileSync('test_api/lx/allpdo.json','utf-8');
+	//var data = fs.readFileSync('test_api/wxl/allpdo.json','utf-8');
 
 	console.log('POST');
 	console.log(req.body);
