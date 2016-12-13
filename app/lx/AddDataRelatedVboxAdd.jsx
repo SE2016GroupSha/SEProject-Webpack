@@ -167,6 +167,10 @@ var AddDataRelatedVboxAdd = React.createClass( {
 			}
 			var time;
 			var ms = (new Date()).getTime()-datas[i]['time'];
+			var isFuture = (ms < 0);
+			if (isFuture) {
+				ms = -1.0 * ms;
+			}
 			var s = ms/1000.0;
 			var min = s/60.0;
 			var hour = min/60.0;
@@ -174,17 +178,17 @@ var AddDataRelatedVboxAdd = React.createClass( {
 			var mon = day/30.0;
 			var year = mon/12.0;
 			if (year >= 1) {
-				time = parseInt(year)+'年前';
+				time = parseInt(year)+'年'+(isFuture?'后':'前');
 			} else if (mon >= 1) {
-				time = parseInt(mon)+'个月前';
+				time = parseInt(mon)+'个月'+(isFuture?'后':'前');
 			} else if (day >= 1) {
-				time = parseInt(day)+'天前';
+				time = parseInt(day)+'天'+(isFuture?'后':'前');
 			} else if (hour >= 1) {
-				time = parseInt(hour)+'小时前';
+				time = parseInt(hour)+'小时'+(isFuture?'后':'前');
 			} else if (min >= 1) {
-				time = parseInt(min)+'分钟前';
+				time = parseInt(min)+'分钟'+(isFuture?'后':'前');
 			} else {
-				time = '刚刚';
+				time = isFuture?'即将':'刚刚';
 			}
 			items.push(
 				<a key={i} className={"list-group-item b-l-3x "+color[i%4]} onClick={this.itemDetailClickHandle.bind(null, i, datas[i])}>
@@ -210,7 +214,7 @@ var AddDataRelatedVboxAdd = React.createClass( {
 				  <div className="wrapper b-t m-t-xxs" style={{marginTop:'0px',borderTopWidth:'0px'}}>
 					<div className="input-group" style={{marginTop:'10px'}}>
 					  <span className="input-group-addon input-sm"><i className="fa fa-search"></i></span>
-					  <input type="text" className="form-control input-sm" placeholder="搜索数据，关键字以空格分开" value={this.props.searchKey} onChange={this.inputChangeHandle.bind(null, null)}></input>
+					  <input type="text" className="form-control input-sm" placeholder="搜索数据，多关键字以空格分开" value={this.props.searchKey} onChange={this.inputChangeHandle.bind(null, null)}></input>
 					</div>
 				  </div>
 				  

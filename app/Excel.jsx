@@ -78,43 +78,47 @@ var Excel = React.createClass( {
 		});
 	},
 	addAllDATA:function(datas,pdos){
-		//添加 模板
-		var httpParamspdos = {'pdos': pdos};
 		var self = this;
-		var flag=false;
-		$.ajax( {
-			async: false,
-			type: "POST",
-			cache: false,
-			url: "api/pdo/add",
-			data: {'params':JSON.stringify(httpParamspdos)},
-			dataType: "json",
-			success:function(data){
-				if(data['state']=='success'){
-					flag =true;
-				}else{
+		
+		//添加模板
+		if (pdos.length > 0) {
+			var httpParamspdos = {'pdos': pdos};
+			var flag=false;
+			$.ajax( {
+				async: false,
+				type: "POST",
+				cache: false,
+				url: "api/pdo/add",
+				data: {'params':JSON.stringify(httpParamspdos)},
+				dataType: "json",
+				success:function(data){
+					if(data['state']=='success'){
+						flag =true;
+					}else{
+						self.setState({
+							msg: ['内部错误'],
+							pdos: pdos,
+							datas:datas,
+							rightstate:'error',
+							state_pdo_or_data:'data',
+						});
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
 					self.setState({
-						msg: ['内部错误'],
+						msg: ['网络错误（请检查网络后重新导入）'],
+						datas: datas,
 						pdos: pdos,
-						datas:datas,
 						rightstate:'error',
 						state_pdo_or_data:'data',
 					});
 				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				self.setState({
-					msg: ['网络错误（请检查网络后重新导入）'],
-					datas: datas,
-					pdos: pdos,
-					rightstate:'error',
-					state_pdo_or_data:'data',
-				});
+			});
+			if(flag == false){
+				return ;
 			}
-		});
-		if(flag == false){
-			return ;
 		}
+		
 		
 		//修正数据的pdo的id
 		var status = {'state':'unknown'};

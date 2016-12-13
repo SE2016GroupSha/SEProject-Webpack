@@ -127,6 +127,10 @@ var ViewDataView = React.createClass( {
 			}
 			var relatedTime = '';
 			var ms = (new Date()).getTime()-relatedDataObj['time'];
+			var isFuture = (ms < 0);
+			if (isFuture) {
+				ms = -1.0 * ms;
+			}
 			var s = ms/1000.0;
 			var min = s/60.0;
 			var hour = min/60.0;
@@ -134,17 +138,17 @@ var ViewDataView = React.createClass( {
 			var mon = day/30.0;
 			var year = mon/12.0;
 			if (year >= 1) {
-				relatedTime = parseInt(year)+'年前';
+				relatedTime = parseInt(year)+'年'+(isFuture?'后':'前');
 			} else if (mon >= 1) {
-				relatedTime = parseInt(mon)+'个月前';
+				relatedTime = parseInt(mon)+'个月'+(isFuture?'后':'前');
 			} else if (day >= 1) {
-				relatedTime = parseInt(day)+'天前';
+				relatedTime = parseInt(day)+'天'+(isFuture?'后':'前');
 			} else if (hour >= 1) {
-				relatedTime = parseInt(hour)+'小时前';
+				relatedTime = parseInt(hour)+'小时'+(isFuture?'后':'前');
 			} else if (min >= 1) {
-				relatedTime = parseInt(min)+'分钟前';
+				relatedTime = parseInt(min)+'分钟'+(isFuture?'后':'前');
 			} else {
-				relatedTime = '刚刚';
+				relatedTime = isFuture?'即将':'刚刚';
 			}
 			related.push(
 				<a key={i} className={"list-group-item b-l-3x "+color[i%4]} id={"panel-data-"+deep+"-"+relatedDataId} onClick={this.dataClickHandle.bind(null, deep, relatedDataId)}>

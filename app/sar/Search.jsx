@@ -112,7 +112,7 @@ var Search = React.createClass( {
 					<div className="wrapper-md">
 					  <form className="m-b-md">
 						<div className="input-group">
-						  <input id="searchInput" type="text" className="form-control input-lg" placeholder="输入关键字" onKeyDown={this.handleEnterPress}/>
+						  <input id="searchInput" type="text" className="form-control input-lg" placeholder="输入关键字，多关键字以空格分隔" onKeyDown={this.handleEnterPress}/>
 						  <span className="input-group-btn">
 							<button className="btn btn-lg btn-default" type="button" onClick={this.handleSearchClick}>搜索</button>
 						  </span>
