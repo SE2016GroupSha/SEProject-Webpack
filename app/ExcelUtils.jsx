@@ -178,6 +178,12 @@ var ExcelUtils = {
 			//时间字段警告 & 收集colsHash
 			for (var i=0; i<cols.length; i++) {
 				colsHash[cols[i]] = '';
+				if ((worksheet[cols[i]+row].v+'')=='日期') {
+					if (status['state'] != 'error') {
+						status['state'] = 'warning';
+					}
+					errorMsg.push('格式警告: 第' + row + '行存在\'日期\'字段(位置: '+ (cols[i]+row) + ')');
+				}
 				if ((worksheet[cols[i]+row].v+'')=='时间') {
 					if (status['state'] != 'error') {
 						status['state'] = 'warning';

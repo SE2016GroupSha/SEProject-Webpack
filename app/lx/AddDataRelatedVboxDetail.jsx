@@ -9,7 +9,7 @@ var AddDataRelatedVboxDetail = React.createClass( {
 
         };
     },
-    componentDidMount: function() {
+    componentWillMount: function() {
 		//Date的format添加
 		this.dateFormatInject();
     },

@@ -9,11 +9,14 @@ var Orbit = React.createClass( {
 			pdoIdMap: {},
 			isView: false,
 			msg: '正在加载',
-			days: 0,
+			regTime: 0,
 			username: '-'
         };
     },
     componentWillMount: function() {
+		//Date的format添加
+		this.dateFormatInject();
+		
 		var self = this;
 		var key = {"keys":[""]};
 		$.ajax({
@@ -84,21 +87,41 @@ var Orbit = React.createClass( {
 			success: function(data) {
 				if (data['state']=='failed') {
 					self.setState({
-						days: 0
+						regTime: 0
 					});
 				} else {
 					self.setState({
-						days: data['regdays']
+						regTime: data['regtime']
 					});
 				}
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				self.setState({
-					days: 0
+					regTime: 0
 				});
 			}
 		});
     },
+	dateFormatInject: function () {
+		Date.prototype.format = function(fmt)   
+		{ //author: meizz   
+		  var o = {   
+			"M+" : this.getMonth()+1,                 //月份   
+			"d+" : this.getDate(),                    //日   
+			"h+" : this.getHours(),                   //小时   
+			"m+" : this.getMinutes(),                 //分   
+			"s+" : this.getSeconds(),                 //秒   
+			"q+" : Math.floor((this.getMonth()+3)/3), //季度   
+			"S"  : this.getMilliseconds()             //毫秒   
+		  };   
+		  if(/(y+)/.test(fmt))   
+			fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+		  for(var k in o)   
+			if(new RegExp("("+ k +")").test(fmt))   
+		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+		  return fmt;   
+		};
+	},
     render: function() {
 		
 		var datas = this.state.datas;
@@ -232,17 +255,28 @@ var Orbit = React.createClass( {
 				</div>
 			);
 		}
-		var day = this.state.days;
+		
+		
+		var time = '';
+		var ms = (new Date().getTime())-this.state.regTime;
+		var s = ms/1000.0;
+		var min = s/60.0;
+		var hour = min/60.0;
+		var day = hour/24.0;
 		var mon = day/30.0;
 		var year = mon/12.0;
 		if (year >= 1) {
 			time = parseInt(year)+'年前';
 		} else if (mon >= 1) {
 			time = parseInt(mon)+'个月前';
-		} else if (day >= 2) {
+		} else if (day >= 1) {
 			time = parseInt(day)+'天前';
+		} else if (hour >= 1) {
+			time = parseInt(hour)+'小时前';
+		} else if (min >= 1) {
+			time = parseInt(min)+'分钟前';
 		} else {
-			time = '今天';
+			time = '刚刚';
 		}
 		itemArray.push(
 				<div key={'-1'}>
@@ -260,7 +294,7 @@ var Orbit = React.createClass( {
 						  </span>
 						</div>
 						<div className="panel-body">
-						  <div><span className="block" style={{textOverflow:'ellipsis',overflow:'hidden',whiteSpace:'nowrap',whiteSpace:'pre'}}>{this.state.days==1?'今天':((this.state.days-1)+'天前')}，你来到了足迹</span></div>
+						  <div><span className="block" style={{textOverflow:'ellipsis',overflow:'hidden',whiteSpace:'nowrap',whiteSpace:'pre'}}>{(new Date(this.state.regTime).format("yyyy年MM月dd日"))}，你来到了足迹</span></div>
 						</div>  
 					  </div>
 					</div>
