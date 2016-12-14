@@ -4,7 +4,30 @@
 		index: React.PropTypes.number.isRequired,
 		downloadHandle: React.PropTypes.func.isRequired,
     },
-
+    componentWillMount: function() {
+		//Date的format添加
+		this.dateFormatInject();
+    },
+	dateFormatInject: function () {
+		Date.prototype.format = function(fmt)   
+		{ //author: meizz   
+		  var o = {   
+			"M+" : this.getMonth()+1,                 //月份   
+			"d+" : this.getDate(),                    //日   
+			"h+" : this.getHours(),                   //小时   
+			"m+" : this.getMinutes(),                 //分   
+			"s+" : this.getSeconds(),                 //秒   
+			"q+" : Math.floor((this.getMonth()+3)/3), //季度   
+			"S"  : this.getMilliseconds()             //毫秒   
+		  };   
+		  if(/(y+)/.test(fmt))   
+			fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+		  for(var k in o)   
+			if(new RegExp("("+ k +")").test(fmt))   
+		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+		  return fmt;   
+		};
+	},
     render: function() {
 		
 		var colorname='panel-heading text-center no-border ';// bg-info
@@ -38,12 +61,12 @@
 		}
 		
 		var datetime = new Date(this.props.pdos[this.props.index].time);
-        var year = datetime.getFullYear();
-        var month = datetime.getMonth();
-        var day = datetime.getDate();
-        var hour = datetime.getHours();
-        var min = datetime.getMinutes();
-        var second = datetime.getSeconds();
+        // var year = datetime.getFullYear();
+        // var month = datetime.getMonth()+1;
+        // var day = datetime.getDate();
+        // var hour = datetime.getHours();
+        // var min = datetime.getMinutes();
+        // var second = datetime.getSeconds();
 		
 		var fieldsarray=[];
 		for(var j=0;j<this.props.pdos[this.props.index].fields.length;j++){
@@ -60,10 +83,10 @@
 				<div className={colorname}>
 				  <h4 className="text-u-c m-b-none">{this.props.pdos[this.props.index].name}</h4>
 				  <h2 className="m-t-none">
-					<span className="text-xs">{year}/</span>
-					<span className="new1 text-lt"> {month}/ {day}</span>
+					<span className="text-xs">{datetime.format("yyyy/")}</span>
+					<span className="new1 text-lt">{datetime.format("MM/dd")}</span>
 						&nbsp;
-					<span className="text-xs"> {hour}:{min}:{second}</span>
+					<span className="text-xs"> {datetime.format("hh:mm")} </span>
 				  </h2>
 				</div>
 				<ul className="list-group">

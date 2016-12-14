@@ -254,7 +254,7 @@ var ViewPDO = React.createClass( {
 									  </li>
 									</ul>
 									<div className="panel-footer text-center b-t m-t bg-light lter">
-									  <div className="m-t-sm">添加一个属于我自己的PDO~</div>
+									  <div className="m-t-sm">添加一个属于我自己的模板~</div>
 									  <a onClick={this.props.menuHandleWxl.bind(null, 4,1)} className="btn btn-warning font-bold m">去添加</a>
 									</div>
 								  </div>
